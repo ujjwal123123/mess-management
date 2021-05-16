@@ -12,10 +12,10 @@ create table Hostels
 
 create table Students
 (
-    name         varchar(30),
-    email        varchar(40),
-    roll_no      int(7) primary key,
-    hostel_id    int REFERENCES Hostels (id)
+    name      varchar(30),
+    email     varchar(40),
+    roll_no   int(7) primary key,
+    hostel_id int REFERENCES Hostels (id)
 );
 
 create table Leaves
