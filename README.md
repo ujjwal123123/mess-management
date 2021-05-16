@@ -9,3 +9,11 @@
    2. Student history showing their previous leaves.
 5. Generate a spreadsheet.
 6. Send mess bill to students individually.
+
+# Queries to implement
+
+- [ ] The mess bill of XYZ student within a range of dates.
+- [ ] Total amount of this month for all the students.
+- [ ] Total amount of this month for a particular batch.
+- [ ] The leave history (having only mess due) of a student.
+- [ ] How many days a student availed mess rebate in a semester (start and end date can be given)
