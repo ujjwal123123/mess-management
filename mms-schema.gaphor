@@ -325,13 +325,14 @@
 </Property>
 <Class id="2715f092-b1b0-11eb-baa6-b581ea8c3b37">
 <name>
-<val>Semester</val>
+<val>Semesters</val>
 </name>
 <ownedAttribute>
 <reflist>
 <ref refid="2ef8c3e8-b1b0-11eb-baa6-b581ea8c3b37"/>
 <ref refid="32ea47d8-b1b0-11eb-baa6-b581ea8c3b37"/>
 <ref refid="8b3cadc0-b1b2-11eb-baa6-b581ea8c3b37"/>
+<ref refid="6d26e1a6-b66d-11eb-816a-4b3d0d6defc7"/>
 </reflist>
 </ownedAttribute>
 <ownedOperation>
@@ -352,6 +353,9 @@
 <class_>
 <ref refid="2715f092-b1b0-11eb-baa6-b581ea8c3b37"/>
 </class_>
+<isStatic>
+<val>1</val>
+</isStatic>
 <name>
 <val>start_date</val>
 </name>
@@ -378,10 +382,10 @@
 <val>1</val>
 </isStatic>
 <name>
-<val>batch</val>
+<val>year_of_admission</val>
 </name>
 <typeValue>
-<val>string</val>
+<val>year</val>
 </typeValue>
 </Property>
 <Operation id="b661210c-b1b2-11eb-baa6-b581ea8c3b37">
@@ -615,6 +619,20 @@
 </class_>
 <name>
 <val>remark</val>
+</name>
+<typeValue>
+<val>string</val>
+</typeValue>
+</Property>
+<Property id="6d26e1a6-b66d-11eb-816a-4b3d0d6defc7">
+<class_>
+<ref refid="2715f092-b1b0-11eb-baa6-b581ea8c3b37"/>
+</class_>
+<isStatic>
+<val>1</val>
+</isStatic>
+<name>
+<val>program</val>
 </name>
 <typeValue>
 <val>string</val>

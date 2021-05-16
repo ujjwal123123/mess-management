@@ -16,4 +16,5 @@
 - [ ] Total amount of this month for all the students.
 - [ ] Total amount of this month for a particular batch.
 - [ ] The leave history (having only mess due) of a student.
-- [ ] How many days a student availed mess rebate in a semester (start and end date can be given)
+- [ ] How many days a student availed mess rebate in a semester (start and end
+      date can be given)

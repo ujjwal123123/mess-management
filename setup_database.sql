@@ -15,7 +15,6 @@ create table Students
     name         varchar(30),
     email        varchar(40),
     roll_no      int(7) primary key,
-    unpaidAmount int,
     hostel_id    int REFERENCES Hostels (id)
 );
 
