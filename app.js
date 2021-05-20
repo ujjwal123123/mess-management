@@ -22,6 +22,31 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
 
+const mariadb = require("mariadb");
+const pool = mariadb.createPool({
+  host: "localhost",
+  user: "root",
+  password: "",
+  connectionLimit: 5,
+  database: "mess",
+});
+
+pool
+  .getConnection()
+  .then((conn) => {
+    conn
+      .query("select * from Leaves")
+      .then((rows) => {
+        console.log(rows);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404));
