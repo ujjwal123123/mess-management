@@ -3,6 +3,7 @@ var express = require("express");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var logger = require("morgan");
+require("dotenv").config();
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -28,11 +29,11 @@ app.use("/semester", semesterRouter);
 
 const mariadb = require("mariadb");
 const pool = mariadb.createPool({
-  host: "localhost",
-  user: "root",
-  password: "",
+  host: process.env.DB_HOST,
+  user: process.env.USER,
+  password: process.env.DB_PASSWORD,
   connectionLimit: 5,
-  database: "mess",
+  database: process.env.DB_NAME,
 });
 
 pool
