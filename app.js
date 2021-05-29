@@ -26,6 +26,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/student", studentRouter);
 app.use("/semester", semesterRouter);
+app.use("/addSemester", semesterRouter)
 
 const mariadb = require("mariadb");
 const pool = mariadb.createPool({

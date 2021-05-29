@@ -1,7 +1,46 @@
 extends layout
 
 block content
-  h1.title.is-1 Semesters
+  .level
+    .level-left
+      h1.title.is-1 Semesters
+    .level-right 
+      //- make the following button work
+      button.modal-button.button(data-target="modal" aria-haspopup="true") Add semester
+
+  .modal.is-active(id="add_semester")
+    .modal-background 
+    .modal-content
+      .box
+        form(action="/addSemester" method="post") 
+          .field 
+            label.label Start Date
+            .control 
+              input.input(type="date" name="start_date" required)
+          .field
+            label.label End date 
+            .control 
+              input.input(type="date" name="end_date" required)
+          .field 
+            label.label Program 
+            .select
+              select(name="program" required)
+                option(disabled selected hidden) Select Program
+                option(value="btech") B. Tech.
+                option(value="mtech") M. Tech.
+                option(value="phd") Ph.D.
+          .field 
+            label.label Year of admission 
+              .control 
+                //- TODO: set default value to the current year
+                input.input(type="number" name="year_of_admission" required value="2020")
+          .field 
+            .control
+              //- TODO: correct spacing between the buttons
+              button.is-info.button(type="submit") Submit
+              button.button Cancel
+      button.modal-close.is-large(aria-label="close")
+
   table.table.is-striped.is-hoverable
     thead
       tr
