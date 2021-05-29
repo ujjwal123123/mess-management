@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+        <head>
+                <title >Job Application</title>
+                <meta name="description" content="If you want a job, Apply here"/>
+                <meta charset="UTF-8">
+                <!-- Webpage will fit in everyType of screen -->
+                <meta name="viewport" content="width=divice-width ,intial-scale=1">
+
+                <!-- Font Style -->
+                <link rel="preconnect" href="https://fonts.gstatic.com">
+                <link href="https://fonts.googleapis.com/css2?family=Bungee+Outline&family=Dancing+Script:wght@700&family=Langar&display=swap" rel="stylesheet">
+                
+
+        </head>
+        <body>
+
+                <h2>Student leaves</h2>
+                <!-- <form id="survey-form" action="/my-handling-form-page" method="post">  action: it will find post req. in js file-->
+                <form action="calculator">
+                  <label for="roll_no">Roll No :</label>
+                  <input type="number" id="roll_no" name="roll_no" placeholder="Enter roll no"><br>
+
+                  <label for="start_date">start_date :</label><br>
+                  <input type="date" id="start_date" name="start_date" ><br>
+                  <label for="end_date">end_date :</label><br>
+                  <input type="date" id="end_date" name="end_date" ><br>
+
+                  <label for="Remark">Remark:</label><br>
+                  <textarea name="Remark" rows="5" cols="100"></textarea><br><br>
+                  <input type="submit" value="Submit">
+                </form> 
+                
+                <p>If you click the "Submit" button, the form-data will be sent to a page called "/action_page.php".</p>
+                <div>
+                        <span><a href="/addSemester">Add Semester</a></span>
+                        <span><a href="/semester">Show Semester</a></span>
+                </div>
+        </body>
+</html>

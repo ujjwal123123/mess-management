@@ -1,3 +1,62 @@
+//- extends layout
+
+//- block content
+//-   .level
+//-     .level-left
+//-       h1.title.is-1 Semesters
+//-     .level-right 
+//-       //- make the following button work
+//-       button.modal-button.button(data-target="modal" aria-haspopup="true") Add semester
+
+//-   .modal.is-active(id="add_semester")
+//-     .modal-background 
+//-     .modal-content
+//-       .box
+//-         form(action="/addSemester" method="post") 
+//-           .field 
+//-             label.label Start Date
+//-             .control 
+//-               input.input(type="date" name="start_date" required)
+//-           .field
+//-             label.label End date 
+//-             .control 
+//-               input.input(type="date" name="end_date" required)
+//-           .field 
+//-             label.label Program 
+//-             .select
+//-               select(name="program" required)
+//-                 option(disabled selected hidden) Select Program
+//-                 option(value="btech") B. Tech.
+//-                 option(value="mtech") M. Tech.
+//-                 option(value="phd") Ph.D.
+//-           .field 
+//-             label.label Year of admission 
+//-               .control 
+//-                 //- TODO: set default value to the current year
+//-                 input.input(type="number" name="year_of_admission" required value="2020")
+//-           .field 
+//-             .control
+//-               //- TODO: correct spacing between the buttons
+//-               button.is-info.button(type="submit") Submit
+//-               button.button Cancel
+//-       button.modal-close.is-large(aria-label="close")
+
+//-   table.table.is-striped.is-hoverable
+//-     thead
+//-       tr
+//-       th Start date
+//-       th End date
+//-       th Program
+//-       th Year of admission
+//-     tbody  
+//-       each item in items
+//-         tr
+//-           td= item.start_date
+//-           td= item.end_date
+//-           td= item.program
+//-           td= item.year_of_admission
+//-         tr
+
 extends layout
 
 block content
@@ -5,18 +64,15 @@ block content
   table.table.is-striped.is-hoverable
     thead
       tr
-      th Start date
-      th End date
-      th Program
-      th Year of admission
+        th Start date
+        th End date
+        th Program
+        th Year of admission
     tbody
-      tr
-      td lorem
-      td ipsum
-      td lorem
-      td ipsum
-      tr
-      td lorem
-      td ipsum
-      td lorem
-      td ipsum
+      each item in items
+        tr
+          td= item.start_date
+          td= item.end_date
+          td= item.program
+          td= item.year_of_admission
+        tr
