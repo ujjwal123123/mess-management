@@ -3,6 +3,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+const database = require("./database");
 require("dotenv").config();
 
 const indexRouter = require("./routes/index");
@@ -26,26 +27,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/student", studentRouter);
 app.use("/semester", semesterRouter);
-app.use("/addSemester", semesterRouter)
-
-const mariadb = require("mariadb");
-const pool = mariadb.createPool({
-  host: process.env.DB_HOST,
-  user: process.env.USER,
-  password: process.env.DB_PASSWORD,
-  connectionLimit: 5,
-  database: process.env.DB_NAME,
-});
-
-pool
-  .getConnection()
-  .then((conn) => {
-    conn
-      .query("select * from Semesters")
-      .then((rows) => console.log(rows))
-      .catch((err) => console.log(err));
-  })
-  .catch((err) => console.log(err));
+app.use("/addSemester", semesterRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
