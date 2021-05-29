@@ -44,18 +44,16 @@ block content
   table.table.is-striped.is-hoverable
     thead
       tr
-      th Start date
-      th End date
-      th Program
-      th Year of admission
+        th Start date
+        th End date
+        th Program
+        th Year of admission
     tbody
-      tr
-      td lorem
-      td ipsum
-      td lorem
-      td ipsum
-      tr
-      td lorem
-      td ipsum
-      td lorem
-      td ipsum
+      each item in items
+        tr
+          td= item.start_date
+          td= item.end_date
+          //- TODO: format program name
+          td= item.program
+          td= item.year_of_admission
+
