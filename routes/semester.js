@@ -6,16 +6,17 @@ router.get("/", function (req, res, next) {
   database
     .getConnection()
     .then((conn) => {
-      var sqlQuery = "select  DATE_FORMAT(start_date,'%d %M %Y') as start_date, DATE_FORMAT(end_date,'%d %M %Y') as end_date,program,year_of_admission  from Semesters;";
+      var sqlQuery =
+        "select  DATE_FORMAT(start_date,'%d %M %Y') as start_date, DATE_FORMAT(end_date,'%d %M %Y') as end_date,program,year_of_admission  from Semesters;";
 
       conn
         .query(sqlQuery)
         .then((rows) => {
-          res.render('semester', { items: rows })
+          res.render("semester", { items: rows });
         })
         .catch((err) => console.log(err));
     })
-    .catch((err) => console.log(err))
+    .catch((err) => console.log(err));
 });
 
 router.post("/", function (req, res, next) {
@@ -49,7 +50,6 @@ router.post("/", function (req, res, next) {
     })
     .catch((err) => {
       console.log(err);
-      conn.end();
       res.end("Error");
     });
 });

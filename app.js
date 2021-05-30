@@ -3,7 +3,6 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-const database = require("./database");
 require("dotenv").config();
 
 const indexRouter = require("./routes/index");
