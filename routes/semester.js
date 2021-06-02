@@ -2,7 +2,7 @@ const express = require("express");
 const database = require("../database");
 const router = express.Router();
 
-router.get("/", function (req, res, next) {
+router.get("/", function (req, res) {
   database
     .getConnection()
     .then((conn) => {
@@ -13,13 +13,14 @@ router.get("/", function (req, res, next) {
         .query(sqlQuery)
         .then((rows) => {
           res.render("semester", { items: rows });
+          conn.end();
         })
         .catch((err) => console.log(err));
     })
     .catch((err) => console.log(err));
 });
 
-router.post("/", function (req, res, next) {
+router.post("/", function (req, res) {
   console.log(req.body);
 
   database

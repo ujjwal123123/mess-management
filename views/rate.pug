@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  .level
+    .level-left
+      h1.title.is-1 Rate
+    .level-right
+      button.modal-button.button(data-target="add_rate" aria-haspopup="true") Add Rate
+
+  table.table.is-striped.is-hoverable
+    thead
+      tr
+        th Start date
+        th Rate
+    tbody
+      each item in items
+        tr
+          td= item.start_date
+          td= item.rate
+
+
+

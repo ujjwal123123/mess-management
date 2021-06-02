@@ -11,7 +11,7 @@ html
       nav.navbar.is-info(role='navigation' aria-label='main navigation')
         .container
           .navbar-brand
-            a.navbar-item.is-size-4(href='/')  Mess Management 
+            a.navbar-item.is-size-4(href='/')  Mess Management
             a.navbar-burger(role='button' aria-label='menu' aria-expanded='false' data-target='navbarCollapsible')
               span(aria-hidden='true')
               span(aria-hidden='true')
@@ -19,9 +19,10 @@ html
           #navbarCollapsible.navbar-menu
             .navbar-end
               //- TODO: apply `is-active` class depending on the page user is on
-              a.navbar-item(href='/')  Home 
-              a.navbar-item.is-active(href='semester')  Semesters 
-              a.navbar-item(href='student')  Student 
+              a.navbar-item(href='/')  Home
+              a.navbar-item(href='semester')  Semesters
+              a.navbar-item(href='student')  Student
+              a.navbar-item(href='rate')  Rate
 
       script(src='js/navbar.js')
 
