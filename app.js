@@ -9,6 +9,7 @@ const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 const studentRouter = require("./routes/student");
 const semesterRouter = require("./routes/semester");
+const rateRouter = require("./routes/rate");
 
 let app = express();
 
@@ -26,7 +27,7 @@ app.use("/", indexRouter);
 app.use("/users", usersRouter);
 app.use("/student", studentRouter);
 app.use("/semester", semesterRouter);
-app.use("/addSemester", semesterRouter);
+app.use("/rate", rateRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
