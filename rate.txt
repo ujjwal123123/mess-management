@@ -1,1 +1,2 @@
-this is rate.txt
+this what  is to rate.txt
+and some line are added
