@@ -7,6 +7,27 @@ block content
     .level-right
       button.modal-button.button(data-target="add_rate" aria-haspopup="true") Add Rate
 
+  .modal(id="add_rate")
+    .modal-background
+    .modal-content
+      .box
+        form(action="/rate" method="post")
+          .field
+            label.label From
+            .control
+              input.input(type="date" name="start_date" required)
+          .field
+            label.label New Rate
+            .control
+              input.input(type="number" name="rate" required)
+          .field
+            .control
+              //- TODO: correct spacing between the buttons
+              button.is-info.button(type="submit") Submit
+              button.button Cancel
+
+    button.modal-close.is-large(aria-label="close")
+
   table.table.is-striped.is-hoverable
     thead
       tr
@@ -17,6 +38,8 @@ block content
         tr
           td= item.start_date
           td= item.rate
+
+  script(type='text/javascript' src='/js/model-toggle.js')
 
 
 
