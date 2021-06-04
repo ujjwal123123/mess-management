@@ -1,30 +1,39 @@
 doctype html
 html
   head
-    meta(charset='utf-8')
-    meta(name='viewport' content='width=device-width, initial-scale=1')
+    meta(charset="utf-8")
+    meta(name="viewport", content="width=device-width, initial-scale=1")
     title Mess Management
-    link(rel='stylesheet' href='https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css')
+    link(
+      rel="stylesheet",
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css"
+    )
+    link(rel="stylesheet", href="/css/custom.css")
   body
     //- TODO: move navbar code to a separate file
     block navbar
-      nav.navbar.is-info(role='navigation' aria-label='main navigation')
+      nav.navbar.is-info(role="navigation", aria-label="main navigation")
         .container
           .navbar-brand
-            a.navbar-item.is-size-4(href='/')  Mess Management
-            a.navbar-burger(role='button' aria-label='menu' aria-expanded='false' data-target='navbarCollapsible')
-              span(aria-hidden='true')
-              span(aria-hidden='true')
-              span(aria-hidden='true')
+            a.navbar-item.is-size-4(href="/") Mess Management
+            a.navbar-burger(
+              role="button",
+              aria-label="menu",
+              aria-expanded="false",
+              data-target="navbarCollapsible"
+            )
+              span(aria-hidden="true")
+              span(aria-hidden="true")
+              span(aria-hidden="true")
           #navbarCollapsible.navbar-menu
             .navbar-end
               //- TODO: apply `is-active` class depending on the page user is on
-              a.navbar-item(href='/')  Home
-              a.navbar-item(href='semester')  Semesters
-              a.navbar-item(href='student')  Student
-              a.navbar-item(href='rate')  Rate
+              a.navbar-item(href="/") Home
+              a.navbar-item(href="semester") Semesters
+              a.navbar-item(href="student") Student
+              a.navbar-item(href="rate") Rate
 
-      script(src='js/navbar.js')
+    script(src="js/navbar.js")
 
     main.container.my-6
       block content

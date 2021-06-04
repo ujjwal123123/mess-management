@@ -5,21 +5,21 @@ block content
     .level-left
       h1.title.is-1 Rate
     .level-right
-      button.modal-button.button(data-target="add_rate" aria-haspopup="true") Add Rate
+      button.modal-button.button(data-target="add_rate", aria-haspopup="true") Add Rate
 
-  .modal(id="add_rate")
+  #add_rate.modal
     .modal-background
     .modal-content
       .box
-        form(action="/rate" method="post")
+        form(action="/rate", method="post")
           .field
             label.label From
             .control
-              input.input(type="date" name="start_date" required)
+              input.input(type="date", name="start_date", required)
           .field
             label.label New Rate
             .control
-              input.input(type="number" name="rate" required)
+              input.input(type="number", name="rate", required)
           .field
             .control
               //- TODO: correct spacing between the buttons
@@ -39,7 +39,4 @@ block content
           td= item.start_date
           td= item.rate
 
-  script(type='text/javascript' src='/js/model-toggle.js')
-
-
-
+  script(type="text/javascript", src="/js/model-toggle.js")
