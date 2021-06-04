@@ -1,6 +1,6 @@
-var express = require("express");
+const express = require("express");
 const app = require("../app");
-var router = express.Router();
+const router = express.Router();
 
 router.get("/", function (req, res, next) {
   let roll_no = req.query.roll_no;

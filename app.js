@@ -11,7 +11,7 @@ const studentRouter = require("./routes/student");
 const semesterRouter = require("./routes/semester");
 const rateRouter = require("./routes/rate");
 
-let app = express();
+const app = express();
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
