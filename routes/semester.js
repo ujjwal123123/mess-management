@@ -6,8 +6,8 @@ router.get("/", function (req, res) {
   database
     .getConnection()
     .then((conn) => {
-      var sqlQuery =
-        "select  DATE_FORMAT(start_date,'%d %M %Y') as start_date, DATE_FORMAT(end_date,'%d %M %Y') as end_date,program,year_of_admission  from Semesters;";
+      const sqlQuery =
+        "select DATE_FORMAT(start_date, '%d %M %Y') as start_date, DATE_FORMAT(end_date,'%d %M %Y') as end_date, program, year_of_admission from Semesters";
 
       conn
         .query(sqlQuery)

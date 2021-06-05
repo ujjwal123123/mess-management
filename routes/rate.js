@@ -4,8 +4,8 @@ const router = express.Router();
 
 router.get("/", function (req, res) {
   database.getConnection().then((conn) => {
-    var sqlQuery =
-      "select DATE_FORMAT(start_date,'%d %M %Y') as start_date,rate from Rate;";
+    const sqlQuery =
+      "select DATE_FORMAT(start_date, '%d %M %Y') as start_date, rate from Rate";
     conn
       .query(sqlQuery)
       .then((rows) => {
