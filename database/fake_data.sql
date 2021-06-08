@@ -33,3 +33,9 @@ INSERT INTO Leaves (roll_no, start_date, end_date, remark)
 VALUES (1901009, '2021-01-12', '2021-02-10', null),
        (2001201, '2021-05-01', '2021-05-03', null),
        (2001201, '2021-05-13', '2021-05-16', null);
+
+-- for user
+INSERT INTO Users(loginId,loginPass)
+values  ('a@gmail.com','abc'),
+		('u@gmail.com','abc');
+

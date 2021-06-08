@@ -41,3 +41,11 @@ create table Rate
     start_date date primary key,
     rate       int
 );
+
+create table Users
+(
+    loginId     varchar(40) primary key,
+    loginPass   varchar(100)
+
+);
+
