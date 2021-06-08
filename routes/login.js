@@ -2,21 +2,23 @@ const express = require("express");
 const database = require("../database");
 const router = express.Router();
 
+router.get("/", function (req, res) {
+  res.render("login");
+
+});
+
 router.post("/", function (req, res) {
   database
     .getConnection()
     .then((conn) => {
       // TODO: validate data before insertion
       conn
-        // .query(
-        //   "INSERT INTO Rate (start_date, rate) VALUES (?,?);",
-        //   [
-        //     req.body.start_date,
-        //     req.body.rate,
-        //   ]
-        // )
-        .then((data) => {
-          console.log(`${data} inserted`);
+        .query("Select * from Users;",[])
+        .then((rows) => {
+          var id = req.body.loginId;
+          var pass = req.body.loginPass;
+          // console.log(rows);
+          console.log('id is '+id+' pass is '+pass);
           conn.end();
           res.end("Sucess");
         })
