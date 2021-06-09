@@ -8,19 +8,19 @@ router.get("/", function (req, res) {
 
 });
 
-router.post("/", async function(req, res) {
+router.post("/", async function (req, res) {
   // const hashedPassword = await bcrypt.hash(req.body.login_pass,10);
   // console.log('hashed password is ->'+hashedPassword);
   database
     .getConnection()
     .then((conn) => {
       conn
-        .query("Select * from Users ",[])
+        .query("Select * from Users ", [])
         .then(async (rows) => {
-          for(var i=0;i<rows.length;i++){
-            if(rows[i].login_id == req.body.login_id){
-              try{
-                if( await bcrypt.compare(req.body.login_pass,rows[i].login_pass) ){
+          for (var i = 0; i < rows.length; i++) {
+            if (rows[i].login_id == req.body.login_id) {
+              try {
+                if (await bcrypt.compare(req.body.login_pass, rows[i].login_pass)) {
                   console.log('password match perfectly');
                   conn.end();
                   res.render('index');
@@ -32,7 +32,7 @@ router.post("/", async function(req, res) {
                 }
                 break;
               }
-              catch{
+              catch {
                 console.log('catch found');
                 conn.end();
                 res.end("Error");
