@@ -1,31 +1,23 @@
 extends layout
 
 block content
-  section.hero.is-primary.is-fullheight
-    .hero-body
-      .container
-        .columns.is-centered
-          .column.is-5-tablet.is-4-desktop.is-4-widescreen
-            form.box(action='/login', method='post')
-              .field
-                label.label(for='') Email
-                .control.has-icons-left
-                  input.input(type='email' name='loginId' placeholder='e.g. a@gmail.com' required)
-                  span.icon.is-small.is-left
-                    i.fa.fa-envelope
-              .field
-                label.label(for='') Password
-                .control.has-icons-left
-                  input.input(type='password' name='loginPass' placeholder='*******' required)
-                  span.icon.is-small.is-left
-                    i.fa.fa-lock
-              .field
-                label.checkbox(for='')
-                  input(type='checkbox')
-                  |                Remember me
-              .field
-                button.button.is-success
-                  | Login
-
-
-  script(type="text/javascript", src="/js/model-toggle.js")
+  .hero-body
+    .container
+      .columns.is-centered
+        .column.is-5-tablet.is-4-desktop.is-4-widescreen
+          form.box(action='/login', method='post')
+            .field
+              label.label(for='') Email
+              .control
+                input.input(type='email' name='login_id' placeholder='e.g. a@gmail.com' required)
+                //- span.icon.is-small.is-left
+                  i.fa.fa-envelope
+            .field
+              label.label(for='') Password
+              .control
+                input.input(type='password' name='login_pass' placeholder='*******' required)
+                //- span.icon.is-small.is-left
+                  i.fa.fa-lock
+            .field
+              button.button.is-success
+                | Login

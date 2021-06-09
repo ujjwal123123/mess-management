@@ -44,8 +44,7 @@ create table Rate
 
 create table Users
 (
-    loginId     varchar(40) primary key,
-    loginPass   varchar(100)
-
+    login_id     varchar(40) primary key,
+    login_pass   varchar(100)
 );
 
