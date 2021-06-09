@@ -37,5 +37,4 @@ VALUES (1901009, '2021-01-12', '2021-02-10', null),
 -- for user
 INSERT INTO Users(loginId,loginPass)
 VALUES ('a@gmail.com','abc'),
-	   ('u@gmail.com','abc');
-
+       ('u@gmail.com','abc');
