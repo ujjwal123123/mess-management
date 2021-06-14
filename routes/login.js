@@ -5,12 +5,9 @@ const bcrypt = require("bcrypt");
 
 router.get("/", function (req, res) {
   res.render("login");
-
 });
 
-router.post("/", async function (req, res) {
-  // const hashedPassword = await bcrypt.hash(req.body.login_pass,10);
-  // console.log('hashed password is ->'+hashedPassword);
+router.post("/", async function (req, res, next) {
   database
     .getConnection()
     .then((conn) => {
@@ -20,27 +17,27 @@ router.post("/", async function (req, res) {
           for (var i = 0; i < rows.length; i++) {
             if (rows[i].login_id == req.body.login_id) {
               try {
-                if (await bcrypt.compare(req.body.login_pass, rows[i].login_pass)) {
-                  console.log('password match perfectly');
+                if (
+                  await bcrypt.compare(req.body.login_pass, rows[i].login_pass)
+                ) {
+                  console.log("password match perfectly");
                   conn.end();
-                  res.render('index');
-                }
-                else {
-                  console.log('user enter wrong password');
+                  res.render("index");
+                } else {
+                  console.log("user enter wrong password");
                   conn.end();
-                  res.render('login');
+                  res.render("login");
                 }
                 break;
-              }
-              catch {
-                console.log('catch found');
+              } catch {
+                console.log("catch found");
                 conn.end();
                 res.end("Error");
               }
             }
-          }//for loop end
-          console.log('no user found');
-          res.render('login');
+          } //for loop end
+          console.log("no user found");
+          res.render("login");
           conn.end();
         })
         .catch((err) => {

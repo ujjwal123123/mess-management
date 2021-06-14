@@ -5,19 +5,25 @@ block content
     .container
       .columns.is-centered
         .column.is-5-tablet.is-4-desktop.is-4-widescreen
-          form.box(action='/login', method='post')
+          form.box(action="/login", method="post")
             .field
-              label.label(for='') Email
+              label.label(for="") Email
               .control
-                input.input(type='email' name='login_id' placeholder='e.g. a@gmail.com' required)
-                //- span.icon.is-small.is-left
-                  i.fa.fa-envelope
+                input.input(
+                  type="email",
+                  name="login_id",
+                  placeholder="e.g. a@gmail.com",
+                  required
+                )
             .field
-              label.label(for='') Password
+              label.label(for="") Password
               .control
-                input.input(type='password' name='login_pass' placeholder='*******' required)
-                //- span.icon.is-small.is-left
-                  i.fa.fa-lock
+                input.input(
+                  type="password",
+                  name="login_pass",
+                  placeholder="*******",
+                  required
+                )
             .field
               button.button.is-success
                 | Login
