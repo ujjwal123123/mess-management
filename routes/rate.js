@@ -24,13 +24,10 @@ router.post("/", function (req, res) {
     .then((conn) => {
       // TODO: validate data before insertion
       conn
-        .query(
-          "INSERT INTO Rate (start_date, rate) VALUES (?,?);",
-          [
-            req.body.start_date,
-            req.body.rate,
-          ]
-        )
+        .query("INSERT INTO Rate (start_date, rate) VALUES (?,?);", [
+          req.body.start_date,
+          req.body.rate,
+        ])
         .then((data) => {
           console.log(`${data} inserted`);
           conn.end();
