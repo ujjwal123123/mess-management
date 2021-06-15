@@ -3,7 +3,12 @@ const router = express.Router();
 
 /* GET users listing. */
 router.get("/", function (req, res, next) {
-  res.send("respond with a resource");
+  if (req.session.userId) {
+    res.send("respond with a resource");
+  }
+  else {
+    res.redirect("/");
+  }
 });
 
 module.exports = router;
