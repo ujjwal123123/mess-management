@@ -4,13 +4,16 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 
 router.get("/", function (req, res) {
+  if (!req.session.userId) {
   res.render("login");
-
+  }
+  else{
+    res.redirect("/");
+  }
 });
 
 router.post("/", async function (req, res) {
-  // const hashedPassword = await bcrypt.hash(req.body.login_pass,10);
-  // console.log('hashed password is ->'+hashedPassword);
+  if (!req.session.userId) {
   database
     .getConnection()
     .then((conn) => {
@@ -22,8 +25,9 @@ router.post("/", async function (req, res) {
               try {
                 if (await bcrypt.compare(req.body.login_pass, rows[i].login_pass)) {
                   console.log('password match perfectly');
+                  req.session.userId = req.body.login_id;
                   conn.end();
-                  res.render('index');
+                  res.redirect('/');
                 }
                 else {
                   console.log('user enter wrong password');
@@ -54,6 +58,10 @@ router.post("/", async function (req, res) {
       console.log(err);
       res.end("Error");
     });
+  }
+  else{
+    res.redirect("/");
+  }
 });
 
 module.exports = router;
