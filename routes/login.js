@@ -35,7 +35,7 @@ router.post("/", async function (req, res) {
         });
     })
   }
-  else{
+  else {
     res.redirect("/");
   }
 });
