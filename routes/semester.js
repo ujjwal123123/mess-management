@@ -63,4 +63,17 @@ router.post("/", function (req, res) {
   }
 });
 
+router.delete("/", function (req, res) {
+  database.getConnection().then((conn) => {
+    conn
+      .query(
+        "DELETE FROM Semesters WHERE start_date=? AND program=? AND year_of_admission=?",
+        [req.body.start_date, req.body.program, req.body.year_of_admission]
+      )
+      .then(() => {
+        res.status(200).json({ messsage: "Deleted succesfully." });
+      });
+  });
+});
+
 module.exports = router;
