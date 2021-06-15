@@ -25,11 +25,11 @@ router.post("/", async function (req, res) {
           ) {
             console.log("password match perfectly");
             req.session.userId = req.body.login_id;
-            res.render("index");
+            res.redirect("/");
             conn.end();
             return;
           }
-          res.render("login");
+          res.redirect("login");
           console.log("no user found");
           conn.end();
         });
