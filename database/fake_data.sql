@@ -1,7 +1,7 @@
 -- for hostel table
 INSERT INTO Hostels(id, name)
-VALUES (100, 'boys_hostel'),
-       (101, 'girls_hostel');
+VALUES (100, 'Boys hostel'),
+       (101, 'Girls hostel');
 
 -- for rate table
 INSERT INTO Rate(start_date, rate)
@@ -35,7 +35,7 @@ VALUES (1901009, '2021-01-12', '2021-02-10', null),
        (2001201, '2021-05-13', '2021-05-16', null);
 
 -- for user
-INSERT INTO Users(loginId,loginPass)
+INSERT INTO Users(login_id,login_pass)
 VALUES ('a@gmail.com','$2b$10$BWRGottmRk7cPE7BawRPi.RxbdHBbJJEqU08DKkXo.YOZdxjg7ZsC'),
 	   ('u@gmail.com','$2b$10$ziZzG5pZg9tqneCw9kzumOk8.TQQeGc6DHHy0.cj9Ewc26NrcmA6u');
 
