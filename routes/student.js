@@ -1,11 +1,24 @@
 const express = require("express");
-const app = require("../app");
+const session = require("express-session");
+const database = require("../database");
 const router = express.Router();
 
 router.get("/", function (req, res, next) {
-  let roll_no = req.query.roll_no;
+  database.getConnection().then((conn) => {
+    if (req.session.userId) {
+      const sqlQuery = "select * from Students";
 
-  res.render("layout", { name: "Ujjwal Goel", roll_no: roll_no });
+      conn.query(sqlQuery).then((rows) => {
+        res.render("student", { items: rows });
+        conn.end();
+      });
+    }
+    else {
+      res.redirect("/");
+    }
+  });
 });
+
+// TODO: implement POST method
 
 module.exports = router;
