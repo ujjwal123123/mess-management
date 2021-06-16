@@ -37,7 +37,8 @@ app.use("/student", studentRouter);
 app.use("/semester", semesterRouter);
 app.use("/rate", rateRouter);
 app.use("/login", loginRouter);
-app.use("/logout",logoutRouter);
+app.use("/logout", logoutRouter);
+app.use("/settings", settingsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

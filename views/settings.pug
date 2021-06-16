@@ -1,0 +1,23 @@
+extends layout
+
+block content
+  .level
+    .level-left
+      h1.title.is-1 Settings
+
+  h2.title.is-3 Change password
+    .columns
+      .column.is-5-tablet.is-4-desktop.is-4-widescreen
+        form(action="/update_password", method="post")
+          .field
+            lable.label Current password
+            .control
+              input.input(type="password", name="current_password", required)
+          .field
+            label.label New password
+            .control
+              input.input(type="password", name="new_password", required)
+          .field
+            .control
+              .buttons
+                button.is-info.button(type="submit") Change password
