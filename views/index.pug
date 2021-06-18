@@ -1,5 +1,41 @@
 extends layout
 
 block content
-  h1.title.is-1= title
-  p Welcome to #{ title }
+  h1.title.is-1 Add Leaves
+  .level
+    .level-left
+      .modal-content
+        .box
+          form(action="/", method="post")
+            .field
+              label.label Roll No
+              .control
+                input.input(
+                  type="text",
+                  name="roll_no",
+                  pattern="[1-9]{1}[0-9]{1}[0-0]{1}[1-9]{1}[0-9]{3}",
+                  placeholder="Enter Roll no",
+                  required
+                )
+            .field
+              label.label Start Date
+              .control
+                input.input(type="date", name="start_date", required)
+            .field
+              label.label End date
+              .control
+                input.input(type="date", name="end_date", required)
+            .field
+              label.label Remark
+              .control
+                textarea.textarea(
+                  type="text",
+                  name="remark",
+                  maxlength="240",
+                  placeholder="Any Remark upto 240 word size"
+                )
+            .field
+              .control
+                .buttons
+                  button.is-info.button(type="submit") Submit
+                  button.button Cancel
