@@ -19,9 +19,7 @@ router.post("/", async function (req, res) {
       conn
         .query("SELECT * FROM Users WHERE login_id = ?", [req.body.login_id])
         .then(async (rows) => {
-          if (
-            rows[0].login_id == req.body.login_id &&
-            (await bcrypt.compare(req.body.login_pass, rows[0].login_pass))
+          if (await bcrypt.compare(req.body.login_pass, rows[0].login_pass)
           ) {
             console.log("password match perfectly");
             req.session.userId = req.body.login_id;
