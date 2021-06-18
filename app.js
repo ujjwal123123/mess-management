@@ -13,6 +13,7 @@ const semesterRouter = require("./routes/semester");
 const rateRouter = require("./routes/rate");
 const loginRouter = require("./routes/login");
 const logoutRouter = require("./routes/logout");
+const settingsRouter = require("./routes/settings");
 
 const app = express();
 
