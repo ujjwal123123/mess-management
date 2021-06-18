@@ -46,7 +46,7 @@ router.post("/", function (req, res) {
                   );
                   console.log(err);
                   conn.end();
-                  res.end("Error"); //sent to error page
+                  res.end("error"); //sent to error page
                 });
             });
           } else {
@@ -62,7 +62,7 @@ router.post("/", function (req, res) {
           );
           console.log(err);
           conn.end();
-          res.end("Error"); //sent to error page
+          res.end("error"); //sent to error page
         });
     });
   } else {
