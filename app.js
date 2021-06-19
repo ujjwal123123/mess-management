@@ -14,6 +14,7 @@ const rateRouter = require("./routes/rate");
 const loginRouter = require("./routes/login");
 const logoutRouter = require("./routes/logout");
 const settingsRouter = require("./routes/settings");
+const leavesRouter = require("./routes/leaves");
 
 const app = express();
 
@@ -40,6 +41,7 @@ app.use("/rate", rateRouter);
 app.use("/login", loginRouter);
 app.use("/logout", logoutRouter);
 app.use("/settings", settingsRouter);
+app.use("/leaves", leavesRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
