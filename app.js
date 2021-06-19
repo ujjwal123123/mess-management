@@ -45,6 +45,10 @@ app.use((req, res, next) => {
   }
   next();
 });
+app.use(function (req, res, next) {
+  res.locals.userId = req.session.userId;
+  next();
+});
 
 app.use("/", indexRouter);
 app.use("/student", studentRouter);
