@@ -34,8 +34,12 @@ app.use(
   })
 );
 app.use((req, res, next) => {
-  // Redirect user to login page if he is not logged is
-  if (!req.session.userId && req.path != "/login") {
+  // Redirect user to login page if he is not logged in
+  if (
+    process.env.NODE_ENV != "development" &&
+    !req.session.userId &&
+    req.path != "/login"
+  ) {
     res.redirect("login");
     return;
   }
