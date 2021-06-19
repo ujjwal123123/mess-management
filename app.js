@@ -3,7 +3,7 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-var session = require("express-session");
+const session = require("express-session");
 require("dotenv").config();
 
 const indexRouter = require("./routes/index");
@@ -27,11 +27,21 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, "public")));
-app.use(session({
-  secret : process.env.SESSION_SECRET,
-  resave : false,
-  saveUninitialized : false,
-}));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use((req, res, next) => {
+  // Redirect user to login page if he is not logged is
+  if (!req.session.userId && req.path != "/login") {
+    res.redirect("login");
+    return;
+  }
+  next();
+});
 
 app.use("/", indexRouter);
 app.use("/users", usersRouter);
