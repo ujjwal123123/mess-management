@@ -7,7 +7,6 @@ const session = require("express-session");
 require("dotenv").config();
 
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
 const studentRouter = require("./routes/student");
 const semesterRouter = require("./routes/semester");
 const rateRouter = require("./routes/rate");
@@ -44,7 +43,6 @@ app.use((req, res, next) => {
 });
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
 app.use("/student", studentRouter);
 app.use("/semester", semesterRouter);
 app.use("/rate", rateRouter);
