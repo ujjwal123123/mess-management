@@ -1,28 +1,33 @@
 extends layout
 
 block content
-  .hero-body
-    .container
-      .columns.is-centered
-        .column.is-5-tablet.is-4-desktop.is-4-widescreen
-          form.box(action="/login", method="post")
-            .field
-              label.label(for="") Email
-              .control
-                input.input(
-                  type="email",
-                  name="login_id",
-                  placeholder="e.g. a@gmail.com",
-                  required
-                )
-            .field
-              label.label(for="") Password
-              .control
-                input.input(
-                  type="password",
-                  name="login_pass",
-                  placeholder="*******",
-                  required
-                )
-            .field
-              button.button.is-success(type="submit") Login
+  .columns.is-centered
+    .column.is-5-tablet.is-4-desktop.is-4-widescreen
+      form.box(action="/login", method="post")
+        h1.title.is-1.has-text-centered Login
+
+        if messages
+          each message in messages
+            .message.is-info
+              .message-body= message
+
+        .field
+          label.label(for="login_id") Email
+          .control
+            input#login_id.input(
+              type="email",
+              name="login_id",
+              placeholder="username@iiitg.ac.in",
+              required
+            )
+        .field
+          label.label(for="login_pass") Password
+          .control
+            input#login_pass.input(
+              type="password",
+              name="login_pass",
+              placeholder="*******",
+              required
+            )
+        .field
+          button.button.is-success(type="submit") Login
