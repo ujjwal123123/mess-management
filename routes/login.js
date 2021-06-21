@@ -11,21 +11,19 @@ router.get("/", function (req, res) {
   }
 });
 
-router.post("/", async function (req, res) {
+router.post("/", async function (req, res, next) {
   database.getConnection().then((conn) => {
     // TODO: handle expected errors
     conn
       .query("SELECT * FROM Users WHERE login_id = ?", [req.body.login_id])
       .then(async (rows) => {
         if (await bcrypt.compare(req.body.login_pass, rows[0].login_pass)) {
-          console.log("password match perfectly");
           req.session.userId = req.body.login_id;
           res.redirect("/");
           conn.end();
           return;
         }
-        res.redirect("login");
-        console.log("no user found");
+        next(Error("No user found"));
         conn.end();
       });
   });

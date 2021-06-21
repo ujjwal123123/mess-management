@@ -2,7 +2,7 @@ const express = require("express");
 const database = require("../database");
 const router = express.Router();
 
-router.get("/", function (req, res) {
+router.get("/", function (req, res, next) {
   database
     .getConnection()
     .then((conn) => {
@@ -15,12 +15,12 @@ router.get("/", function (req, res) {
           res.render("semester", { items: rows });
           conn.end();
         })
-        .catch((err) => console.log(err));
+        .catch((err) => next(err));
     })
-    .catch((err) => console.log(err));
+    .catch((err) => next(err));
 });
 
-router.post("/", function (req, res) {
+router.post("/", function (req, res, next) {
   database
     .getConnection()
     .then((conn) => {
@@ -36,21 +36,11 @@ router.post("/", function (req, res) {
           ]
         )
         .then((data) => {
-          console.log(`${data} inserted`);
           conn.end();
-          res.end("Sucess");
         })
-        .catch((err) => {
-          // TODO: return error to user
-          console.log(err);
-          conn.end();
-          res.end("Error");
-        });
+        .catch((err) => next(err));
     })
-    .catch((err) => {
-      console.log(err);
-      res.end("Error");
-    });
+    .catch((err) => next(err));
 });
 
 router.delete("/", function (req, res) {
