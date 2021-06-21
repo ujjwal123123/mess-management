@@ -2,10 +2,9 @@ const express = require("express");
 const router = express.Router();
 const database = require("../database");
 
-router.post("/", function (req, res) {
+router.post("/", function (req, res, next) {
   if (Date.parse(req.body.start_date) > Date.parse(req.body.end_date)) {
-    console.log("INVALID FORMAT :Select end date after start date");
-    res.redirect("/");
+    next(Error("INVALID FORMAT: Select end date after start date"));
     return;
   }
   database.getConnection().then((conn) => {
@@ -26,31 +25,22 @@ router.post("/", function (req, res) {
                 req.body.remark,
               ])
               .then((data) => {
-                console.log("leave inserted successfully");
                 conn.end();
-                res.redirect("/");
               })
               .catch((err) => {
-                console.log(
-                  "roll_no check was successfull but inserting data into database creating error"
-                );
-                console.log(err);
+                next(err);
                 conn.end();
-                res.end("error"); //sent to error page
               });
           });
         } else {
+          next(Error("The roll no could not be found in database"));
           conn.end();
-          console.log("given roll no is not found in Student database ");
-          res.redirect("/");
+          return;
         }
       })
       .catch((err) => {
-        //catch statement ->if opening database creates some error
-        console.log("Student varification is unsuccessful and creating error");
-        console.log(err);
+        next(err);
         conn.end();
-        res.end("error"); //sent to error page
       });
   });
 });

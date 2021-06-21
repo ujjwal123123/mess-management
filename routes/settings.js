@@ -7,7 +7,7 @@ router.get("/", function (req, res) {
   res.render("settings");
 });
 
-router.post("/update_password", function (req, res) {
+router.post("/update_password", function (req, res, next) {
   database.getConnection().then((conn) => {
     // TODO: handle expected errors
     conn
@@ -16,7 +16,6 @@ router.post("/update_password", function (req, res) {
         if (
           await bcrypt.compare(req.body.current_password, rows[0].login_pass)
         ) {
-          console.log("password match perfectly");
           conn.end();
           const hashPassword = await bcrypt.hash(req.body.new_password, 10);
           database.getConnection().then((conn) => {
@@ -31,9 +30,8 @@ router.post("/update_password", function (req, res) {
 
           return;
         } else {
-          console.log("you entered wrong password");
+          next(Error("Wrong password entered"));
           conn.end();
-          res.redirect("/");
         }
       });
   });
