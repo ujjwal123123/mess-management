@@ -3,11 +3,10 @@ const express = require("express");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
-var session = require("express-session");
+const session = require("express-session");
 require("dotenv").config();
 
 const indexRouter = require("./routes/index");
-const usersRouter = require("./routes/users");
 const studentRouter = require("./routes/student");
 const semesterRouter = require("./routes/semester");
 const rateRouter = require("./routes/rate");
@@ -34,13 +33,24 @@ app.use(
     saveUninitialized: false,
   })
 );
+app.use((req, res, next) => {
+  // Redirect user to login page if he is not logged in
+  if (
+    process.env.NODE_ENV != "development" &&
+    !req.session.userId &&
+    req.path != "/login"
+  ) {
+    res.redirect("login");
+    return;
+  }
+  next();
+});
 app.use(function (req, res, next) {
   res.locals.userId = req.session.userId;
   next();
 });
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
 app.use("/student", studentRouter);
 app.use("/semester", semesterRouter);
 app.use("/rate", rateRouter);
@@ -58,7 +68,9 @@ app.use(function (req, res, next) {
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get("env") === "development" ? err : {};
+  res.locals.status = err.status;
+  res.locals.stack =
+    req.app.get("env") === "development" ? err.stack : undefined;
 
   // render the error page
   res.status(err.status || 500);

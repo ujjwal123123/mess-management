@@ -3,18 +3,9 @@ const router = express.Router();
 
 router.get("/", function (req, res) {
   if (req.session.userId) {
-    req.session.destroy(function (err) {
-      if (err) {
-        req.render("index");//if will not logout successfully
-      }
-    })
-    console.log("are you sure to log out!!!");
-    res.redirect("/");
+    req.session.destroy();
   }
-  else {
-    res.redirect("/");
-  }
+  res.redirect("login");
 });
-
 
 module.exports = router;

@@ -3,11 +3,7 @@ const router = express.Router();
 
 /* GET home page. */
 router.get("/", function (req, res) {
-  if (req.session.userId) {
-    res.render("index");
-  } else {
-    res.redirect("login"); //-->this should not be change**
-  }
+  res.render("index");
 });
 
 module.exports = router;

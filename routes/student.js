@@ -5,17 +5,12 @@ const router = express.Router();
 
 router.get("/", function (req, res, next) {
   database.getConnection().then((conn) => {
-    if (req.session.userId) {
-      const sqlQuery = "select * from Students";
+    const sqlQuery = "select * from Students";
 
-      conn.query(sqlQuery).then((rows) => {
-        res.render("student", { items: rows });
-        conn.end();
-      });
-    }
-    else {
-      res.redirect("/");
-    }
+    conn.query(sqlQuery).then((rows) => {
+      res.render("student", { items: rows });
+      conn.end();
+    });
   });
 });
 
