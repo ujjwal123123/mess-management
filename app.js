@@ -46,7 +46,9 @@ app.use((req, res, next) => {
   next();
 });
 app.use(function (req, res, next) {
-  res.locals.userId = req.session.userId;
+  if (req.session.userId) {
+    res.locals.userName = req.session.userId.split("@")[0];
+  }
   next();
 });
 
