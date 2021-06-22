@@ -39,4 +39,22 @@ router.get("/:roll_no", async function (req, res, next) {
   }
 });
 
+router.get("/delete/:roll_no", async function (req, res, next) {
+  const roll_no = parseInt(req.params.roll_no);
+
+  let conn;
+  try {
+    conn = await database.getConnection();
+    await conn.query(
+      "DELETE from Students where roll_no=?",
+      [roll_no]
+    );
+    res.redirect("/student");
+  } catch (err) {
+    next(err);
+  } finally {
+    if (conn) await conn.end();
+  }
+});
+
 module.exports = router;
