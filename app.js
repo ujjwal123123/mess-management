@@ -40,7 +40,7 @@ app.use((req, res, next) => {
     !req.session.userId &&
     req.path != "/login"
   ) {
-    res.redirect("login");
+    res.redirect("/login");
     return;
   }
   next();
