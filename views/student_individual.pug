@@ -1,0 +1,79 @@
+extends layout
+
+block content
+  .level
+    .level-left
+      span
+        h1.title.is-1.is-inline= student.name
+        .subtitle.is-3.is-inline= ' ' + student.roll_no
+    .level-right
+      // TODO: display if the student is in the hostel here
+
+  p
+    b Email:
+    = student.email
+  p
+    b Hostel:
+    case student.hostel_id
+      when 100
+        |
+        | Boys' Hostel
+      when 101
+        |
+        | Girls' Hostel
+
+  .my-6
+    .level
+      .level-left
+        h2.title.is-2 Leaves
+      .level-right
+        button.modal-button.button(
+          data-target="add_leave_modal",
+          aria-haspopup="true"
+        ) Add Leave
+
+    #add_leave_modal.modal
+      .modal-background
+      .modal-content
+        .box
+          form(action="/leaves", method="post")
+            .field
+              input.input(type="hidden", name="roll_no", value=student.roll_no)
+            .field
+              label.label Start date
+              .control
+                input.input(type="date", name="start_date", required)
+            .field
+              label.label End date
+              .control
+                input.input(type="date", name="end_date", required)
+            .field
+              lable.label Remark
+              .control
+                textarea.textarea(type="text", name="remark", maxlength="240")
+            .field
+              .control
+                .buttons
+                  button.is-info.button(type="submit") Submit
+
+      button.modal-close.is-large(aria-label="close")
+
+    table.table.is-striped.is-hoverable
+      thead
+        tr
+          td
+          td Start date
+          td End date
+          td Remark
+      tbody
+        each leave in leaves
+          tr
+            td
+              button.button.is-danger.is-small(title="Delete")
+                span.icon
+                  img(src="/img/delete_white_24dp.svg")
+            td= leave.start_date
+            td= leave.end_date
+            td= leave.remark
+
+  script(type="text/javascript", src="/js/modal-toggle.js")
