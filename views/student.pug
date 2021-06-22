@@ -16,24 +16,28 @@ block content
           th Email
           th Hostel
       tbody
-        each item in items
+        each student in students
           tr
             td
               .buttons
                 button.button.is-danger.is-small(title="Delete")
                   span.icon
-                    img(src="img/delete_white_24dp.svg")
+                    img(src="/img/delete_white_24dp.svg")
                 button.button.is-info.is-small(title="Edit")
                   span.icon
-                    img(src="img/edit_white_24dp.svg")
-            td= item.roll_no
-            td= item.name
-            td= item.email
+                    img(src="/img/edit_white_24dp.svg")
+                a(href='/student/' + student.roll_no)
+                  button.button.is-info.is-small(title="Open")
+                    span.icon
+                      img(src="/img/open_in_new_white_24dp.svg")
+            td= student.roll_no
+            td= student.name
+            td= student.email
             //- TODO: make this dynamic using query to the `Hostels` table
-            case item.hostel_id
+            case student.hostel_id
               when 100
-                td Boys Hostel
+                td Boys' Hostel
               when 101
-                td Girls Hostel
+                td Girls' Hostel
               default
                 td Error
