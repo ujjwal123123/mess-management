@@ -31,6 +31,7 @@ router.post("/", async function (req, res, next) {
     next(err);
   } finally {
     if (conn) await conn.end();
+    res.redirect("/student/" + roll_no);
   }
 });
 
