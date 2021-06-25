@@ -29,11 +29,12 @@ create table Leaves
 
 create table Semesters
 (
+    id                int unsigned auto_increment primary key,
     start_date        date,
     end_date          date,
     program           ENUM ('btech','mtech','phd'),
     year_of_admission year,
-    primary key (start_date, program, year_of_admission)
+    unique (start_date, program, year_of_admission)
 );
 
 create table Rate
