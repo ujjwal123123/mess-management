@@ -9,28 +9,24 @@ router.post("/", async function (req, res, next) {
   }
   const roll_no = parseInt(req.body.roll_no);
 
-  let conn;
   try {
-    conn = await database.getConnection();
+    const students = await database("Students")
+      .select()
+      .where("roll_no", roll_no);
 
-    const rows = await conn.query("SELECT * FROM Students WHERE roll_no = ?", [
-      roll_no,
-    ]);
-
-    if (rows.length !== 1) {
+    if (students.length !== 1) {
       throw Error("The roll no could not be found in database");
     }
 
-    await conn.query("INSERT INTO Leaves VALUES (?,?,?,?)", [
-      roll_no,
-      req.body.start_date,
-      req.body.end_date,
-      req.body.remark,
-    ]);
+    await database("Leaves").insert({
+      roll_no: roll_no,
+      start_date: req.body.start_date,
+      end_date: req.body.end_date,
+      remark: req.body.remark,
+    });
+    res.redirect("/student/" + roll_no);
   } catch (err) {
     next(err);
-  } finally {
-    if (conn) await conn.end();
   }
 });
 
