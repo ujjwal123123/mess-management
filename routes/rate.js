@@ -2,36 +2,37 @@ const express = require("express");
 const database = require("../database");
 const router = express.Router();
 
-router.get("/", function (req, res, next) {
-  database.getConnection().then((conn) => {
-    const sqlQuery =
+router.get("/", async function (req, res, next) {
+  let conn;
+
+  try {
+    conn = await database.getConnection();
+    const sql =
       "select DATE_FORMAT(start_date, '%d %M %Y') as start_date, rate from Rate";
-    conn
-      .query(sqlQuery)
-      .then((rows) => {
-        res.render("rate", { items: rows });
-        conn.end();
-      })
-      .catch((err) => next(err));
-  });
+    const rates = await conn.query(sql);
+    res.render("rate", { items: rates });
+  } catch (err) {
+    next(err);
+  } finally {
+    if (conn) await conn.end();
+  }
 });
 
-router.post("/", function (req, res, next) {
-  database
-    .getConnection()
-    .then((conn) => {
-      // TODO: validate data before insertion
-      conn
-        .query("INSERT INTO Rate (start_date, rate) VALUES (?,?);", [
-          req.body.start_date,
-          req.body.rate,
-        ])
-        .then((data) => {
-          conn.end();
-        })
-        .catch((err) => next(err));
-    })
-    .catch((err) => next(err));
+router.post("/", async function (req, res, next) {
+  let conn;
+
+  // TODO: validate data before insertion
+  try {
+    conn = await database.getConnection();
+    await conn.query("INSERT INTO Rate (start_date, rate) VALUES (?,?)", [
+      req.body.start_date,
+      req.body.rate,
+    ]);
+  } catch (err) {
+    next(err);
+  } finally {
+    if (conn) await conn.end();
+  }
 });
 
 module.exports = router;
