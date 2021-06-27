@@ -7,34 +7,32 @@ router.get("/", function (req, res) {
   res.render("settings");
 });
 
-router.post("/update_password", function (req, res, next) {
-  database.getConnection().then((conn) => {
-    // TODO: handle expected errors
-    conn
-      .query("SELECT * FROM Users WHERE login_id = ?", [req.session.userId])
-      .then(async (rows) => {
-        if (
-          await bcrypt.compare(req.body.current_password, rows[0].login_pass)
-        ) {
-          conn.end();
-          const hashPassword = await bcrypt.hash(req.body.new_password, 10);
-          database.getConnection().then((conn) => {
-            conn //hash the password
-              .query("UPDATE Users SET login_pass = ? WHERE (login_id = ?)", [
-                hashPassword,
-                req.session.userId,
-              ]);
-            conn.end();
-          });
-          res.redirect("/");
+router.post("/update_password", async function (req, res, next) {
+  let conn;
 
-          return;
-        } else {
-          next(Error("Wrong password entered"));
-          conn.end();
-        }
-      });
-  });
+  // TODO: handle expected errors
+  try {
+    conn = await database.getConnection();
+    const rows = await conn.query("SELECT * FROM Users WHERE login_id = ?", [
+      req.session.userId,
+    ]);
+
+    if (await bcrypt.compare(req.body.current_password, rows[0].login_pass)) {
+      const hashPassword = await bcrypt.hash(req.body.new_password, 10); //hash the password
+      conn.query("UPDATE Users SET login_pass = ? WHERE (login_id = ?)", [
+        hashPassword,
+        req.session.userId,
+      ]);
+      res.redirect("/");
+      return;
+    } else {
+      next(Error("Wrong password entered"));
+    }
+  } catch (err) {
+    next(err);
+  } finally {
+    if (conn) await conn.end();
+  }
 });
 
 module.exports = router;

@@ -2,15 +2,19 @@ const express = require("express");
 const database = require("../database");
 const router = express.Router();
 
-router.get("/", function (req, res, next) {
-  database.getConnection().then((conn) => {
-    const sqlQuery = "select * from Students";
+router.get("/", async function (req, res, next) {
+  let conn;
 
-    conn.query(sqlQuery).then((rows) => {
-      res.render("student", { students: rows });
-      conn.end();
-    });
-  });
+  try {
+    conn = await database.getConnection();
+    const sql = "select * from Students";
+    const students = await conn.query(sql);
+    res.render("student", { stduents: students });
+  } catch (err) {
+    next(err);
+  } finally {
+    if (conn) await conn.end();
+  }
 });
 
 router.get("/:roll_no", async function (req, res, next) {
