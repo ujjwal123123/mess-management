@@ -20,14 +20,12 @@ block content
           tr
             td
               .buttons
-                a(href='/student/delete/' + student.roll_no)
-                  button.button.is-danger.is-small(title="Delete")
-                    span.icon
-                      img(src="/img/delete_white_24dp.svg")
-                a(href="")
-                  button.button.is-info.is-small(title="Edit")
-                    span.icon
-                      img(src="/img/edit_white_24dp.svg")
+                button.button.is-danger.is-small(title="Delete")
+                  span.icon
+                    img(src="/img/delete_white_24dp.svg")
+                button.button.is-info.is-small(title="Edit")
+                  span.icon
+                    img(src="/img/edit_white_24dp.svg")
                 a(href='/student/' + student.roll_no)
                   button.button.is-info.is-small(title="Open")
                     span.icon
