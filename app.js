@@ -48,6 +48,8 @@ app.use((req, res, next) => {
 app.use(function (req, res, next) {
   if (req.session.userId) {
     res.locals.userName = req.session.userId.split("@")[0];
+  } else if (process.env.NODE_ENV == "development") {
+    req.session.userId = "testing@iiitg.ac.in";
   }
   next();
 });
