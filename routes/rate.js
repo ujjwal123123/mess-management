@@ -25,16 +25,12 @@ router.post("/", async function (req, res, next) {
 });
 
 router.delete("/", async function (req, res, next) {
-  try {
-    await database("Rate")
-      .where({
-        start_date: req.body.value,
-      })
-      .del();
-    res.end();
-  } catch (err) {
-    next(err);
-  }
+  await database("Rate")
+    .where({
+      start_date: req.body.value,
+    })
+    .del();
+  res.status(200).json({ messsage: "Deleted succesfully." });
 });
 
 module.exports = router;
