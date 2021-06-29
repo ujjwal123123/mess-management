@@ -18,7 +18,20 @@ router.post("/", async function (req, res, next) {
       start_date: req.body.start_date,
       rate: req.body.rate,
     });
-    res.redirect("/rate")
+    res.redirect("/rate");
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.delete("/", async function (req, res, next) {
+  try {
+    await database("Rate")
+      .where({
+        start_date: req.body.value,
+      })
+      .del();
+    res.end();
   } catch (err) {
     next(err);
   }

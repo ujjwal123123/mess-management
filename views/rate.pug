@@ -31,12 +31,19 @@ block content
   table.table.is-striped.is-hoverable
     thead
       tr
+        th
         th Start date
         th Rate
     tbody
       each item in items
         tr
+          td
+            .buttons
+              button.button.is-danger.is-small(title="Delete", value=item.start_date)
+                span.icon
+                  img(src="/img/delete_white_24dp.svg")
           td= item.start_date
           td= item.rate
 
   script(type="text/javascript", src="/js/modal-toggle.js")
+  script(type="text/javascript", src="/js/delete.js")
