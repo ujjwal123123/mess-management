@@ -30,4 +30,13 @@ router.post("/", async function (req, res, next) {
   }
 });
 
+router.delete("/", async function (req, res, next) {
+  await database("Leaves")
+    .where({
+      id: req.body.value,
+    })
+    .del();
+  res.status(200).json({ messsage: "Deleted succesfully." });
+});
+
 module.exports = router;
