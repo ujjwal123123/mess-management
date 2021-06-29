@@ -20,7 +20,10 @@ block content
           tr
             td
               .buttons
-                button.button.is-danger.is-small(title="Delete")
+                button.button.is-danger.is-small(
+                  title="Delete",
+                  value=student.roll_no
+                )
                   span.icon
                     img(src="/img/delete_white_24dp.svg")
                 button.button.is-info.is-small(title="Edit")
@@ -41,3 +44,5 @@ block content
                 td Girls' Hostel
               default
                 td Error
+
+  script(type="text/javascript", src="/js/delete.js")
