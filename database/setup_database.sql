@@ -20,11 +20,12 @@ create table Students
 
 create table Leaves
 (
+    id         int unsigned auto_increment primary key,
     roll_no    int(7) references Students (roll_no),
     start_date date,
     end_date   date,
     remark     varchar(240),
-    primary key (roll_no, start_date)
+    unique (roll_no, start_date)
 );
 
 create table Semesters
