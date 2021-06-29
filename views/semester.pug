@@ -65,7 +65,7 @@ block content
             //- TODO: implement these buttons
             td
               .buttons
-                button.button.is-danger.is-small(title="Delete")
+                button.button.is-danger.is-small(title="Delete", value=item.id)
                   span.icon
                     img(src="img/delete_white_24dp.svg")
                 button.button.is-info.is-small(title="Edit")
@@ -86,3 +86,4 @@ block content
             td= item.year_of_admission
 
   script(type="text/javascript", src="/js/modal-toggle.js")
+  script(type="text/javascript", src="/js/delete.js")

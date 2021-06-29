@@ -27,19 +27,12 @@ router.post("/", async function (req, res, next) {
 });
 
 router.delete("/", async function (req, res, next) {
-  try {
-    await database("Semesters")
-      .where({
-        start_date: req.body.start_date,
-        program: req.body.program,
-        year_of_admission: req.body.year_of_admission,
-      })
-      .del();
-    res.status(200).json({ messsage: "Deleted succesfully." });
-    res.redirect("/semester");
-  } catch (err) {
-    next(err);
-  }
+  await database("Semesters")
+    .where({
+      id: req.body.value,
+    })
+    .del();
+  res.status(200).json({ messsage: "Deleted succesfully." });
 });
 
 module.exports = router;

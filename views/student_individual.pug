@@ -69,7 +69,11 @@ block content
         each leave in leaves
           tr
             td
-              button.button.is-danger.is-small(title="Delete")
+              button.button.is-danger.is-small(
+                title="Delete",
+                value=leave.id,
+                target="/leaves"
+              )
                 span.icon
                   img(src="/img/delete_white_24dp.svg")
             td= leave.start_date
@@ -77,3 +81,4 @@ block content
             td= leave.remark
 
   script(type="text/javascript", src="/js/modal-toggle.js")
+  script(type="text/javascript", src="/js/delete.js")

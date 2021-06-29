@@ -31,4 +31,13 @@ router.get("/:roll_no", async function (req, res, next) {
   }
 });
 
+router.delete("/", async function (req, res, next) {
+  await database("Students")
+    .where({
+      roll_no: req.body.value,
+    })
+    .del();
+  res.status(200).json({ message: "Deleted succesfully." });
+});
+
 module.exports = router;

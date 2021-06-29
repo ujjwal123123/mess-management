@@ -15,13 +15,13 @@ create table Students
     name      varchar(30),
     email     varchar(40),
     roll_no   int(7) primary key,
-    hostel_id int REFERENCES Hostels (id)
+    hostel_id int references Hostels (id)
 );
 
 create table Leaves
 (
     id         int unsigned auto_increment primary key,
-    roll_no    int(7) references Students (roll_no),
+    roll_no    int(7) references Students (roll_no) on delete cascade,
     start_date date,
     end_date   date,
     remark     varchar(240),
@@ -33,7 +33,7 @@ create table Semesters
     id                int unsigned auto_increment primary key,
     start_date        date,
     end_date          date,
-    program           ENUM ('btech','mtech','phd'),
+    program           enum ('btech','mtech','phd'),
     year_of_admission year,
     unique (start_date, program, year_of_admission)
 );
