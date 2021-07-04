@@ -15,28 +15,22 @@ router.post("/", async function (req, res, next) {
   try {
     // validate data before insertion
     // req.body.start_date must not lie inside a semester
-    const start_date_array = await database("Semesters").whereRaw(
-      "start_date < ? AND end_date > ? AND program = ? AND year_of_admission = ?",
-      [
-        req.body.end_date,
-        req.body.end_date,
-        req.body.program,
-        req.body.year_of_admission,
-      ]
-    );
+    const start_date_array = await database("Semesters")
+      .where("start_date", "<", req.body.end_date)
+      .where("end_date", ">", req.body.end_date)
+      .where("program", req.body.program)
+      .where("year_of_admission", req.body.year_of_admission);
+
     if (start_date_array.length > 0) {
       throw Error("Invalid start date entered");
     }
     // req.body.end_date must not lie inside a semester
-    const end_date_array = await database("Semesters").whereRaw(
-      "start_date < ? AND end_date > ? AND program = ? AND year_of_admission = ?",
-      [
-        req.body.end_date,
-        req.body.end_date,
-        req.body.program,
-        req.body.year_of_admission,
-      ]
-    );
+    const end_date_array = await database("Semesters")
+      .where("start_date", "<", req.body.end_date)
+      .where("end_date", ">", req.body.end_date)
+      .where("program", req.body.program)
+      .where("year_of_admission", req.body.year_of_admission)
+
     if (end_date_array.length > 0) {
       throw Error("Invalid end date entered");
     }
