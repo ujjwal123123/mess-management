@@ -6,6 +6,11 @@ function assert(value) {
   }
 }
 
+/**
+ *
+ * @param {Date} date
+ * @returns {Promise<number>}
+ */
 async function rateOnDate(date) {
   const rateTable = await database("Rate")
     .where("start_date", "<=", date)
@@ -18,10 +23,14 @@ async function rateOnDate(date) {
 
   return rateTable[len - 1].rate;
 }
-
+/**
+ *
+ * @param {number} roll_no
+ * @returns {string}
+ */
 function getProgram(roll_no) {
-  assert(roll_no.length == 7);
-  const programCode = parseInt(roll_no.substring(2, 4));
+  assert(roll_no.toString().length == 7);
+  const programCode = parseInt(roll_no.toString().substring(2, 4));
   switch (programCode) {
     case 1:
       return "btech";
@@ -34,19 +43,30 @@ function getProgram(roll_no) {
   }
 }
 
+/**
+ *
+ * @param {Number} roll_no
+ * @returns {Number}
+ */
 function getYearOfAdmission(roll_no) {
-  assert(roll_no.length == 7);
-  return parseInt(roll_no.substring(0, 2)) + 2000;
+  assert(roll_no.toString().length == 7);
+  return parseInt(roll_no.toString().substring(0, 2)) + 2000;
 }
 
+/**
+ *
+ * @param {Date} date
+ * @param {number} roll_no
+ * @returns {Promise<boolean>}
+ */
 async function isPresentOnDate(date, roll_no) {
-  assert(roll_no);
+  assert(roll_no.toString().length == 7);
   const yearOfAdmission = getYearOfAdmission(roll_no);
   const program = getProgram(roll_no);
 
   const semesterTable = await database("Semesters")
     .where("start_date", "<=", date)
-    .where("end_date", ">=", date)
+    .where("end_date", ">", date)
     .where("program", program)
     .where("year_of_admission", yearOfAdmission);
 
@@ -55,7 +75,7 @@ async function isPresentOnDate(date, roll_no) {
 
   const leavesTable = await database("Leaves")
     .where("start_date", "<=", date)
-    .where("end_date", ">=", date)
+    .where("end_date", ">", date)
     .where("roll_no", roll_no);
 
   assert(leavesTable.length == 1 || leavesTable.length == 0);
@@ -69,3 +89,25 @@ async function isPresentOnDate(date, roll_no) {
   return isPresent;
 }
 
+/**
+ *
+ * @param {Date} start_date
+ * @param {Date} end_date
+ * @param {number} roll_no
+ * @returns {Promise<number>}
+ */
+async function calculateAmount(start_date, end_date, roll_no) {
+  assert(start_date < end_date);
+
+  let amount = 0;
+  var itr_date = start_date;
+  while (itr_date < end_date) {
+    if (await isPresentOnDate(itr_date, roll_no)) {
+      amount += await rateOnDate(itr_date);
+    }
+    itr_date.setDate(itr_date.getDate() + 1);
+  }
+
+  console.log(`amount is ${amount}`);
+  return amount;
+}
