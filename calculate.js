@@ -1,10 +1,5 @@
 const database = require("./database");
-
-function assert(value) {
-  if (!value) {
-    throw Error("Assertion error");
-  }
-}
+const utils = require("./utils");
 
 /**
  *
@@ -23,35 +18,6 @@ async function rateOnDate(date) {
 
   return rateTable[len - 1].rate;
 }
-/**
- *
- * @param {number} roll_no
- * @returns {string}
- */
-function getProgram(roll_no) {
-  assert(roll_no.toString().length == 7);
-  const programCode = parseInt(roll_no.toString().substring(2, 4));
-  switch (programCode) {
-    case 1:
-      return "btech";
-    case 2:
-      return "mtech";
-    case 3:
-      return "phd";
-    default:
-      throw Error("Invalid roll no");
-  }
-}
-
-/**
- *
- * @param {Number} roll_no
- * @returns {Number}
- */
-function getYearOfAdmission(roll_no) {
-  assert(roll_no.toString().length == 7);
-  return parseInt(roll_no.toString().substring(0, 2)) + 2000;
-}
 
 /**
  *
@@ -60,9 +26,9 @@ function getYearOfAdmission(roll_no) {
  * @returns {Promise<boolean>}
  */
 async function isPresentOnDate(date, roll_no) {
-  assert(roll_no.toString().length == 7);
-  const yearOfAdmission = getYearOfAdmission(roll_no);
-  const program = getProgram(roll_no);
+  utils.assert(roll_no.toString().length == 7);
+  const yearOfAdmission = utils.getYearOfAdmission(roll_no);
+  const program = utils.getProgram(roll_no);
 
   const semesterTable = await database("Semesters")
     .where("start_date", "<=", date)
@@ -70,7 +36,7 @@ async function isPresentOnDate(date, roll_no) {
     .where("program", program)
     .where("year_of_admission", yearOfAdmission);
 
-  assert(semesterTable.length == 1 || semesterTable.length == 0);
+  utils.assert(semesterTable.length == 1 || semesterTable.length == 0);
   let isPresent = semesterTable.length === 1;
 
   const leavesTable = await database("Leaves")
@@ -78,7 +44,7 @@ async function isPresentOnDate(date, roll_no) {
     .where("end_date", ">", date)
     .where("roll_no", roll_no);
 
-  assert(leavesTable.length == 1 || leavesTable.length == 0);
+  utils.assert(leavesTable.length == 1 || leavesTable.length == 0);
   if (leavesTable.length === 0 && semesterTable.length === 0) {
     return false;
   }
@@ -97,7 +63,7 @@ async function isPresentOnDate(date, roll_no) {
  * @returns {Promise<number>}
  */
 async function calculateAmount(start_date, end_date, roll_no) {
-  assert(start_date < end_date);
+  utils.assert(start_date < end_date);
 
   let amount = 0;
   var itr_date = start_date;
@@ -110,4 +76,16 @@ async function calculateAmount(start_date, end_date, roll_no) {
 
   console.log(`amount is ${amount}`);
   return amount;
+}
+
+async function getAmountList(roll_no) {
+  const program = utils.getProgram(roll_no);
+  const year_of_admission = utils.getYearOfAdmission(roll_no);
+
+  const semesters = await database("Semesters")
+    .select()
+    .where("year_of_admission", year_of_admission)
+    .where("program", program);
+
+  const leaves = await database("Leaves").select();
 }
