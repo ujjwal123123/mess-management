@@ -11,57 +11,32 @@ router.get("/", async function (req, res, next) {
   }
 });
 
-/**
- *
- * @param {Date} date
- * @param {string} program
- * @param {number} year_of_admission
- * @returns {Promise<boolean>}
- */
-async function dateInSemester(date, program, year_of_admission) {
-  const rows = await database("Semesters")
-    .where("start_date", "<=", date)
-    .where("end_date", ">", date)
-    .where("program", program)
-    .where("year_of_admission", year_of_admission);
-
-  return rows.length > 0;
-}
-
 router.post("/", async function (req, res, next) {
   try {
+    const start_date = new Date(req.body.start_date);
+    const end_date = new Date(req.body.end_date);
+    const year_of_admission = parseInt(req.body.year_of_admission);
+
     // validate data before insertion
-    // req.body.start_date must not lie inside a semester
+    // date ranges must not overlap
+    // (StartDate1 < EndDate2) and (StartDate2 < EndDate1) (See https://stackoverflow.com/a/325939/11659427)
     if (
-      await dateInSemester(
-        req.body.start_date,
-        req.body.program,
-        req.body.year_of_admission
-      )
+      await database("Semesters")
+        .select()
+        .where("start_date", "<", end_date)
+        .where("end_date", ">", start_date)
+        .where("program", req.body.program)
+        .where("year_of_admission", year_of_admission)
+        .then((rows) => rows.length > 0)
     ) {
-      throw Error("Invalid start date entered");
-    }
-
-    // req.body.end_date must not lie inside a semester
-    if (
-      await dateInSemester(
-        req.body.end_date,
-        req.body.program,
-        req.body.year_of_admission
-      )
-    ) {
-      throw Error("Invalid end date entered");
-    }
-
-    if (Date.parse(req.body.end_date) <= Date.parse(req.body.start_date)) {
-      throw Error("End date must be after start date");
+      throw Error("Invalid date entered");
     }
 
     await database("Semesters").insert({
-      start_date: req.body.start_date,
-      end_date: req.body.end_date,
+      start_date: start_date,
+      end_date: end_date,
       program: req.body.program,
-      year_of_admission: req.body.year_of_admission,
+      year_of_admission: year_of_admission,
     });
     res.redirect("/semester");
   } catch (err) {
