@@ -14,7 +14,11 @@ router.get("/", async function (req, res, next) {
 
 router.get("/json", async function (req, res, next) {
   try {
-    const students = await database("Students").select();
+    const students = await database("Students as s")
+      .join("Hostels as h","h.id","s.hostel_id")
+      .select("h.name","s.name")
+      .where({hostel_id : id});
+    console.log(students);
     res.json(students);
   } catch (err) {
     next(err);
