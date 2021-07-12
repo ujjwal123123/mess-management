@@ -17,9 +17,10 @@ router.get("/", async function (req, res, next) {
 router.get("/download", async function (req, res, next) {
   try {
     const csv = new objectstocsv(students);
-    await csv.toDisk("./student_list.csv");
-    res.download("./student_list.csv", () => {
-      fs.unlinkSync("./student_list.csv");
+    const filepath = "public/csv/student_list.csv";
+    await csv.toDisk(filepath);
+    res.download(filepath, () => {
+      fs.unlinkSync(filepath);
     });
   } catch (err) {
     next(err);
