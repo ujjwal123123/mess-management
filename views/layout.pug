@@ -43,11 +43,11 @@ html
                     a.navbar-item(href="/settings") Profile
                     a.navbar-item(href="/logout") Logout
 
-  main.container
-    section.section
-      block content
-
     script(src="/js/navbar.js")
     script(
       src="https://unpkg.com/tabulator-tables@4.9.3/dist/js/tabulator.min.js"
     )
+
+    main.container
+      section.section
+        block content

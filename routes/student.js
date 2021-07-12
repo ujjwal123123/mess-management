@@ -8,7 +8,7 @@ let students;
 router.get("/", async function (req, res, next) {
   try {
     students = await database("Students").select();
-    res.render("student", { students: students });
+    res.render("student", { students: JSON.stringify(students) });
   } catch (err) {
     next(err);
   }
