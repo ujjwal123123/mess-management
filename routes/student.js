@@ -14,11 +14,15 @@ router.get("/", async function (req, res, next) {
 
 router.get("/json", async function (req, res, next) {
   try {
-    const students = await database("Students as s")
-      .join("Hostels as h","h.id","s.hostel_id")
-      .select("h.name","s.name")
-      .where({hostel_id : id});
-    console.log(students);
+    const students = await database
+      .select(
+        "Students.name as name",
+        "email",
+        "roll_no",
+        "Hostels.name as hostel_name"
+      )
+      .from("Students")
+      .join("Hostels", { hostel_id: "id" });
     res.json(students);
   } catch (err) {
     next(err);
