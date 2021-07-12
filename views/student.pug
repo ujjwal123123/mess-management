@@ -11,7 +11,7 @@ block content
 
   script(type="text/javascript", src="/js/delete.js")
   script.
-    new Tabulator('#students-table', {
-      data: !{ students }, // assign data to table
+    const table = new Tabulator('#students-table', {
       autoColumns: true, // create columns from data field names
     });
+    table.setData(window.location.href + '/json');

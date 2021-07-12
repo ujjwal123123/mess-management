@@ -4,18 +4,27 @@ const router = express.Router();
 const objectstocsv = require("objects-to-csv");
 const fs = require("fs");
 
-let students;
 router.get("/", async function (req, res, next) {
   try {
-    students = await database("Students").select();
-    res.render("student", { students: JSON.stringify(students) });
+    res.render("student");
   } catch (err) {
     next(err);
   }
 });
 
+router.get("/json", async function (req, res, next) {
+  try {
+    const students = await database("Students").select();
+    res.json(students);
+  } catch (err) {
+    next(err);
+  }
+});
+
+/** @deprecated */
 router.get("/download", async function (req, res, next) {
   try {
+    const students = await database("Students").select();
     const csv = new objectstocsv(students);
     const filepath = "public/csv/student_list.csv";
     await csv.toDisk(filepath);
