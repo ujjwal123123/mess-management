@@ -5,13 +5,9 @@ block content
     .level-left
       h1.title.is-1 Students
     .level-right
-      a(href="/student/download") Download
+      button#download_button.button Download
 
   #students-table
 
   script(type="text/javascript", src="/js/delete.js")
-  script.
-    const table = new Tabulator('#students-table', {
-      autoColumns: true, // create columns from data field names
-    });
-    table.setData(window.location.href + '/json');
+  script(type="text/javascript", src="/js/tabulator/student.js")
