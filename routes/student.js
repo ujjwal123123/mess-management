@@ -1,8 +1,6 @@
 const express = require("express");
 const database = require("../database");
 const router = express.Router();
-const objectstocsv = require("objects-to-csv");
-const fs = require("fs");
 
 router.get("/", async function (req, res, next) {
   try {
@@ -29,20 +27,6 @@ router.get("/json", async function (req, res, next) {
   }
 });
 
-/** @deprecated */
-router.get("/download", async function (req, res, next) {
-  try {
-    const students = await database("Students").select();
-    const csv = new objectstocsv(students);
-    const filepath = "public/csv/student_list.csv";
-    await csv.toDisk(filepath);
-    res.download(filepath, () => {
-      fs.unlinkSync(filepath);
-    });
-  } catch (err) {
-    next(err);
-  }
-});
 
 router.get("/:roll_no", async function (req, res, next) {
   const roll_no = parseInt(req.params.roll_no);
