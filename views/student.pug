@@ -7,6 +7,42 @@ block content
     .level-right
       button#download_button.button Download
 
+  //- .block
+    form#filter_form
+      fieldset
+        .field
+          label.label Name
+          input#name.input(type="text", placeholder="Search by name")
+
+        .field
+          label.label Hostel
+          .select
+            select#hostel.select(name="hostel")
+              option(value="all") All
+              option(value="101") Girls' Hostel
+              option(value="102") Boys' Hostel
+
+        .field
+          label.label Program
+          .select
+            select#program(name="program")
+              option(value="all") All
+              option(value="btech") B.Tech.
+              option(value="mtech") M.Tech.
+              option(value="phd") Ph.D.
+
+        .field
+          label.label Year of admission
+          input#year_of_admission.input(
+            type="text",
+            pattern="[0-9]{4}"
+            placeholder="Year of admission"
+          )
+
+        .field
+          //- type="button" is needed to prevent the page reload
+          button#clear_filter.button(type="button") Clear filter
+
   #students-table
 
   script(type="text/javascript", src="/js/delete.js")
