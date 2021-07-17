@@ -27,7 +27,6 @@ router.get("/json", async function (req, res, next) {
   }
 });
 
-
 router.get("/:roll_no", async function (req, res, next) {
   const roll_no = parseInt(req.params.roll_no);
 

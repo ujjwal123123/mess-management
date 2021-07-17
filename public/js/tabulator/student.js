@@ -1,12 +1,8 @@
-// const database = require("../database");
-
 const table = new Tabulator("#students-table", {
-  //  layout:"fitColumns",
-  layout: "fitData",
   autoColumns: false, // create columns from data field names
   pagination: "local",
   paginationSize: 30,
-  resizableColumns: false,
+  layout: "fitDataTable",
   columns: [
     {
       title: "Roll No",
@@ -20,14 +16,13 @@ const table = new Tabulator("#students-table", {
           return "/student/" + cell.getData().roll_no;
         },
       },
+      headerFilter: true,
     },
-    { title: "Name", field: "name" },
-    { title: "Email", field: "email" },
-    { title: "Hostel", field: "hostel_name" },
+    { title: "Name", field: "name", headerFilter: true },
+    { title: "Email", field: "email", headerFilter: true },
+    { title: "Hostel", field: "hostel_name", headerFilter: true },
     {
-      // title: "Delete",
       formatter: "buttonCross",
-      width: 80,
       align: "center",
       cellClick: function (e, cell) {
         if (confirm("Are you sure you want to delete this entry?")) {
@@ -39,6 +34,7 @@ const table = new Tabulator("#students-table", {
 });
 table.setData(window.location.href + "/json");
 
+// download button
 const downloadButton = document.getElementById("download_button");
 downloadButton.addEventListener("click", () => {
   table.download("csv", "data.csv");
