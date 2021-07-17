@@ -1,8 +1,5 @@
-// const database = require("../database");
-
 const table = new Tabulator("#students-table", {
-  //  layout:"fitColumns",
-  layout: "fitData",
+  layout: "fitDataTable",
   autoColumns: false, // create columns from data field names
   pagination: "local",
   paginationSize: 30,
@@ -25,18 +22,21 @@ const table = new Tabulator("#students-table", {
     { title: "Email", field: "email" },
     { title: "Hostel", field: "hostel_name" },
     {
-      // title: "Delete",
-      formatter: "buttonCross",
-      width: 80,
-      align: "center",
-      cellClick: function (e, cell) {
-        if (confirm("Are you sure you want to delete this entry?")) {
-          cell.getRow().delete();
-        }
+      title: "Delete",
+      formatter: "link",
+      formatterParams: {
+        label: function (cell) {
+          return "Del";
+        },
+        url: function (cell) {
+          return (
+            "/student/delete/2e87284d245c2aae1c74fa4c50a74c77/" +
+            cell.getData().roll_no
+          );
+        },
       },
     },
   ],
-  layout: "fitDataTable",
 });
 table.setData(window.location.href + "/json");
 
