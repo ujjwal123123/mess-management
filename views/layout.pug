@@ -9,6 +9,10 @@ html
       href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css"
     )
     link(rel="stylesheet", href="/css/custom.css")
+    link(
+      rel="stylesheet",
+      href="https://unpkg.com/tabulator-tables@4.9.3/dist/css/tabulator.min.css"
+    )
   body
     //- TODO: move navbar code to a separate file
     block navbar
@@ -40,7 +44,10 @@ html
                     a.navbar-item(href="/logout") Logout
 
     script(src="/js/navbar.js")
+    script(
+      src="https://unpkg.com/tabulator-tables@4.9.3/dist/js/tabulator.min.js"
+    )
 
-  main.container
-    section.section
-      block content
+    main.container
+      section.section
+        block content

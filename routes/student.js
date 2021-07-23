@@ -1,26 +1,28 @@
 const express = require("express");
 const database = require("../database");
 const router = express.Router();
-const objectstocsv = require("objects-to-csv");
 const fs = require("fs");
 
-let students;
 router.get("/", async function (req, res, next) {
   try {
-    students = await database("Students").select();
-    res.render("student", { students: students });
+    res.render("student");
   } catch (err) {
     next(err);
   }
 });
 
-router.get("/download", async function (req, res, next) {
+router.get("/json", async function (req, res, next) {
   try {
-    const csv = new objectstocsv(students);
-    await csv.toDisk("./student_list.csv");
-    res.download("./student_list.csv", () => {
-      fs.unlinkSync("./student_list.csv");
-    });
+    const students = await database
+      .select(
+        "Students.name as name",
+        "email",
+        "roll_no",
+        "Hostels.name as hostel_name"
+      )
+      .from("Students")
+      .join("Hostels", { hostel_id: "id" });
+    res.json(students);
   } catch (err) {
     next(err);
   }
@@ -46,13 +48,22 @@ router.get("/:roll_no", async function (req, res, next) {
   }
 });
 
-router.delete("/", async function (req, res, next) {
-  await database("Students")
-    .where({
-      roll_no: req.body.value,
-    })
-    .del();
-  res.status(200).json({ message: "Deleted succesfully." });
-});
+router.get(
+  "/delete/2e87284d245c2aae1c74fa4c50a74c77/:roll_no",
+  async function (req, res, next) {
+    const roll_no = req.params.roll_no;
+    try {
+      await database("Students")
+        .where({
+          roll_no: roll_no,
+        })
+        .del();
+      res.redirect("/student");
+      // res.status(200).json({ message: "Deleted succesfully." });
+    } catch (err) {
+      next(err);
+    }
+  }
+);
 
 module.exports = router;
