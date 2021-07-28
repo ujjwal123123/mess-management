@@ -9,15 +9,16 @@ const table = new Tabulator("#students_individual-table", {
     { title: "From", field: "from", headerFilter: true },
     { title: "To", field: "to", headerFilter: true },
     { title: "No. of days", field: "noOfDays", headerFilter: true },
+    { title: "Current Rate", field: "rate", headerFilter: true },
     { title: "Amount", field: "amount", headerFilter: true },
     { title: "Remark", field: "remark", headerFilter: true },
   ],
 });
+let url = window.location.href;
+let index = url.indexOf('student');
+let roll_no = url.substr(index+8,7);
 table.setData(
-  "/student/amount/" +
-    function (cell) {
-      return cell.getData().roll_no;
-    }
+  "/student/amount/"+roll_no
 );
 
 // download button
