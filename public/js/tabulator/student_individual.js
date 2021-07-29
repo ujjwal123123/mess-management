@@ -13,9 +13,9 @@ const table = new Tabulator("#students_individual-table", {
     { title: "Remark", field: "remark", headerFilter: true },
   ],
 });
-let url = window.location.href;
-let index = url.indexOf("student");
-let roll_no = url.substr(index + 8, 7);
+const url = window.location.href;
+const index = url.indexOf("student");
+const roll_no = url.substr(index + 8, 7);
 table.setData("/student/amount/" + roll_no);
 
 // download button
