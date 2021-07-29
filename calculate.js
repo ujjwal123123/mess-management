@@ -48,13 +48,11 @@ async function isPresentOnDateInHostel(date, roll_no) {
   if (leavesTable.length == 0 && semesterTable.length == 0) {
     return false;
   }
-   if(leavesTable.length != 0 && semesterTable.length == 0){
+  if (leavesTable.length != 0 && semesterTable.length == 0) {
     return true;
-  }
-  else if(leavesTable.length == 0 && semesterTable.length == 1){
+  } else if (leavesTable.length == 0 && semesterTable.length == 1) {
     return true;
-  }
-  else if(leavesTable.length != 0 && semesterTable.length == 1){
+  } else if (leavesTable.length != 0 && semesterTable.length == 1) {
     return false;
   }
   return true;
@@ -72,43 +70,41 @@ async function calculateAmount(start, end, roll_no) {
   const end_date = new Date(end);
   // utils.assert(start_date < end_date);//TODO
 
-    let remark="";
-    let amount = 0;
-    let noOfDaysCount = 0;
-    let lastRate = -1;
+  let remark = "";
+  let amount = 0;
+  let noOfDaysCount = 0;
+  let lastRate = -1;
 
   const leaves = await database("Leaves")
     .select()
     .where("roll_no", "=", roll_no)
     .where("start_date", ">=", start_date)
-    .where("start_date", "<",end_date)
-  if(leaves.length==0)
-    remark = "NIL";
+    .where("start_date", "<", end_date);
+  if (leaves.length == 0) remark = "NIL";
   for (let i = 0; i < leaves.length; i++) {
-   remark += (i+1)+') '+leaves[i].remark+"\n";
+    remark += i + 1 + ") " + leaves[i].remark + "\n";
   }
 
   var itr_date = start_date;
   while (itr_date <= end_date) {
     if (await isPresentOnDateInHostel(itr_date, roll_no)) {
-      let currRate = await rateOnDate(itr_date)
+      let currRate = await rateOnDate(itr_date);
       amount += currRate;
       noOfDaysCount++;
-      if(currRate > lastRate)
-        lastRate = currRate;
+      if (currRate > lastRate) lastRate = currRate;
     }
     itr_date.setDate(itr_date.getDate() + 1);
   }
 
   console.log(`amount is ${amount}`);
   console.log(remark);
-  return [amount,remark,noOfDaysCount,lastRate];
+  return [amount, remark, noOfDaysCount, lastRate];
 }
 
 async function getAmountList(roll_no) {
   const program = utils.getProgram(roll_no);
   const year_of_admission = utils.getYearOfAdmission(roll_no);
-  let amountList = []
+  let amountList = [];
 
   const semesters = await database("Semesters")
     .select()
@@ -118,18 +114,37 @@ async function getAmountList(roll_no) {
   let startDate = new Date(semesters[0].start_date);
   let currentDate = new Date();
   let SerialNo = 1;
-  while(currentDate >= startDate){
-    const Start = currentDate.getFullYear().toString()+'-'+(currentDate.getMonth()+1).toString()+'-01';
-    const End = currentDate.getFullYear().toString()+'-'+(currentDate.getMonth()+1).toString()+'-'+(new Date(currentDate.getFullYear(), currentDate.getMonth() +1, 0).getDate()).toString();
+  while (currentDate >= startDate) {
+    const Start =
+      currentDate.getFullYear().toString() +
+      "-" +
+      (currentDate.getMonth() + 1).toString() +
+      "-01";
+    const End =
+      currentDate.getFullYear().toString() +
+      "-" +
+      (currentDate.getMonth() + 1).toString() +
+      "-" +
+      new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0)
+        .getDate()
+        .toString();
 
-    const List = await calculateAmount(Start,End,roll_no);
-    amountList.push({serialNo:SerialNo, from:Start, to:End, noOfDays:List[2], rate:List[3], amount:List[0], remark:List[1]});
+    const List = await calculateAmount(Start, End, roll_no);
+    amountList.push({
+      serialNo: SerialNo,
+      from: Start,
+      to: End,
+      noOfDays: List[2],
+      rate: List[3],
+      amount: List[0],
+      remark: List[1],
+    });
 
     SerialNo++;
-    currentDate.setMonth(currentDate.getMonth()-1);
+    currentDate.setMonth(currentDate.getMonth() - 1);
   }
 
   return amountList;
 }
 
-module.exports = {getAmountList};
+module.exports = { getAmountList };

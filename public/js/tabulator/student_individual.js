@@ -1,5 +1,4 @@
 const table = new Tabulator("#students_individual-table", {
-  layout: "fitDataTable",
   autoColumns: false, // create columns from data field names
   pagination: "local",
   paginationSize: 30,
@@ -15,11 +14,9 @@ const table = new Tabulator("#students_individual-table", {
   ],
 });
 let url = window.location.href;
-let index = url.indexOf('student');
-let roll_no = url.substr(index+8,7);
-table.setData(
-  "/student/amount/"+roll_no
-);
+let index = url.indexOf("student");
+let roll_no = url.substr(index + 8, 7);
+table.setData("/student/amount/" + roll_no);
 
 // download button
 const downloadButton = document.getElementById("download_button");
