@@ -30,10 +30,7 @@ const table = new Tabulator("#students-table", {
           return "Del";
         },
         url: function (cell) {
-          return (
-            "/student/delete/2e87284d245c2aae1c74fa4c50a74c77/" +
-            cell.getData().roll_no
-          );
+          return "/student/delete/" + cell.getData().roll_no;
         },
       },
     },
