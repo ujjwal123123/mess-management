@@ -32,13 +32,9 @@ router.get("/amount/:roll_no", async function (req, res, next) {
   const roll_no = parseInt(req.params.roll_no);
   try {
     calculate.getAmountList(roll_no).then((data) => {
-      // console.log(data);
-      console.log(roll_no);
-      console.log("<-----");
       res.json(data);
     });
   } catch (err) {
-    console.log("Rejection1");
     next(err);
   }
 });
@@ -72,7 +68,6 @@ router.get("/delete/:roll_no", async function (req, res, next) {
       })
       .del();
     res.redirect("/student");
-    // res.status(200).json({ message: "Deleted succesfully." });
   } catch (err) {
     next(err);
   }
