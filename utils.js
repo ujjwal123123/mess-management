@@ -3,7 +3,7 @@
  * @param {boolean} value
  */
 function assert(value) {
-  if (!value) {
+  if (!value && process.env.NODE_ENV == "development") {
     throw Error("Assertion error");
   }
 }
