@@ -22,6 +22,15 @@ block content
         |
         | Girls' Hostel
 
+  .level
+    .level-left
+      h2.title.is-2 Amount
+    .level-right
+      button#download_button.button Download
+  .level
+    .level-left
+      #students_individual-table
+
   .my-6
     .level
       .level-left
@@ -85,5 +94,6 @@ block content
             td= leave.end_date
             td= leave.remark
 
-  script(type="text/javascript", src="/js/modal-toggle.js")
   script(type="text/javascript", src="/js/delete.js")
+  script(type="text/javascript", src="/js/tabulator/student_individual.js")
+  script(type="text/javascript", src="/js/modal-toggle.js")

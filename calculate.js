@@ -2,7 +2,7 @@ const database = require("./database");
 const utils = require("./utils");
 
 /**
- *
+ * Returns mess on a given date using `Rate` table of the database
  * @param {Date} date
  * @returns {Promise<number>}
  */
@@ -20,7 +20,7 @@ async function rateOnDate(date) {
 }
 
 /**
- *
+ * Returns `true` is a student is present in hostel on a given date
  * @param {Date} date
  * @param {number} roll_no
  * @returns {Promise<boolean>}
@@ -32,27 +32,30 @@ async function isPresentOnDate(date, roll_no) {
 
   const semesterTable = await database("Semesters")
     .where("start_date", "<=", date)
-    .where("end_date", ">", date)
+    .where("end_date", ">=", date)
     .where("program", program)
     .where("year_of_admission", yearOfAdmission);
 
   utils.assert(semesterTable.length == 1 || semesterTable.length == 0);
-  let isPresent = semesterTable.length === 1;
 
   const leavesTable = await database("Leaves")
     .where("start_date", "<=", date)
-    .where("end_date", ">", date)
+    .where("end_date", ">=", date)
     .where("roll_no", roll_no);
 
   utils.assert(leavesTable.length == 1 || leavesTable.length == 0);
-  if (leavesTable.length === 0 && semesterTable.length === 0) {
+
+  // TODO: maybe we can just use XOR :-)
+  if (leavesTable.length == 0 && semesterTable.length == 0) {
+    return false;
+  } else if (leavesTable.length == 1 && semesterTable.length == 0) {
+    return true;
+  } else if (leavesTable.length == 0 && semesterTable.length == 1) {
+    return true;
+  } else if (leavesTable.length == 1 && semesterTable.length == 1) {
     return false;
   }
-  if (leavesTable.length === 1) {
-    isPresent = !isPresent;
-  }
-
-  return isPresent;
+  utils.assert(false); // this line should not be reached
 }
 
 /**
@@ -60,32 +63,69 @@ async function isPresentOnDate(date, roll_no) {
  * @param {Date} start_date
  * @param {Date} end_date
  * @param {number} roll_no
- * @returns {Promise<number>}
+ * @returns {Promise<Array>}
  */
 async function calculateAmount(start_date, end_date, roll_no) {
   utils.assert(start_date < end_date);
 
   let amount = 0;
-  var itr_date = start_date;
+  let daysPresent = 0; // number of days the student was present in the hostel
+
+  let itr_date = start_date;
   while (itr_date < end_date) {
     if (await isPresentOnDate(itr_date, roll_no)) {
       amount += await rateOnDate(itr_date);
+      daysPresent++;
     }
     itr_date.setDate(itr_date.getDate() + 1);
   }
 
-  console.log(`amount is ${amount}`);
-  return amount;
+  return [amount, daysPresent];
 }
 
+/**
+ *
+ * @param {number} roll_no
+ * @returns
+ */
 async function getAmountList(roll_no) {
   const program = utils.getProgram(roll_no);
-  const year_of_admission = utils.getYearOfAdmission(roll_no);
+  const yearOfAdmission = utils.getYearOfAdmission(roll_no);
+  let amountList = [];
 
   const semesters = await database("Semesters")
     .select()
-    .where("year_of_admission", year_of_admission)
+    .where("year_of_admission", yearOfAdmission)
     .where("program", program);
 
-  const leaves = await database("Leaves").select();
+  let startDate = new Date(semesters[0].start_date);
+  let currentDate = new Date();
+  while (currentDate >= startDate) {
+    const Start =
+      currentDate.getFullYear().toString() +
+      "-" +
+      (currentDate.getMonth() + 1).toString() +
+      "-01";
+    const End =
+      currentDate.getFullYear().toString() +
+      "-" +
+      (currentDate.getMonth() + 1).toString() +
+      "-" +
+      new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0)
+        .getDate()
+        .toString();
+
+    const row = await calculateAmount(new Date(Start), new Date(End), roll_no);
+    amountList.push({
+      month: Start,
+      daysPresent: row[1],
+      amount: row[0],
+    });
+
+    currentDate.setMonth(currentDate.getMonth() - 1);
+  }
+
+  return amountList;
 }
+
+module.exports = { getAmountList };

@@ -1,7 +1,7 @@
 const express = require("express");
 const database = require("../database");
 const router = express.Router();
-const fs = require("fs");
+const calculate = require("../calculate");
 
 router.get("/", async function (req, res, next) {
   try {
@@ -28,6 +28,17 @@ router.get("/json", async function (req, res, next) {
   }
 });
 
+router.get("/amount/:roll_no", async function (req, res, next) {
+  const roll_no = parseInt(req.params.roll_no);
+  try {
+    calculate.getAmountList(roll_no).then((data) => {
+      res.json(data);
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
 router.get("/:roll_no", async function (req, res, next) {
   const roll_no = parseInt(req.params.roll_no);
 
@@ -48,22 +59,18 @@ router.get("/:roll_no", async function (req, res, next) {
   }
 });
 
-router.get(
-  "/delete/2e87284d245c2aae1c74fa4c50a74c77/:roll_no",
-  async function (req, res, next) {
-    const roll_no = req.params.roll_no;
-    try {
-      await database("Students")
-        .where({
-          roll_no: roll_no,
-        })
-        .del();
-      res.redirect("/student");
-      // res.status(200).json({ message: "Deleted succesfully." });
-    } catch (err) {
-      next(err);
-    }
+router.get("/delete/:roll_no", async function (req, res, next) {
+  const roll_no = req.params.roll_no;
+  try {
+    await database("Students")
+      .where({
+        roll_no: roll_no,
+      })
+      .del();
+    res.redirect("/student");
+  } catch (err) {
+    next(err);
   }
-);
+});
 
 module.exports = router;
