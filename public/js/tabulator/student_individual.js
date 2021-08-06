@@ -4,13 +4,10 @@ const table = new Tabulator("#students_individual-table", {
   paginationSize: 30,
   layout: "fitDataTable",
   columns: [
-    { title: "#", field: "serialNo" },
-    { title: "From", field: "from", headerFilter: true },
-    { title: "To", field: "to", headerFilter: true },
-    { title: "No. of days", field: "noOfDays", headerFilter: true },
-    { title: "Current Rate", field: "rate", headerFilter: true },
+    // TODO: `From` and `To` should just be replaced by a `Month` column
+    { title: "Month", field: "month", headerFilter: true },
+    { title: "No. of days", field: "daysPresent", headerFilter: true },
     { title: "Amount", field: "amount", headerFilter: true },
-    { title: "Remark", field: "remark", headerFilter: true },
   ],
 });
 const url = window.location.href;
