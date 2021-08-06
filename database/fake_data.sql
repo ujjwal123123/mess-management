@@ -15,18 +15,18 @@ VALUES ('2021-01-05', '2021-05-02', 'btech', 2019),
        ('2021-03-11', '2021-05-15', 'btech', 2020);
 
 -- for student
-INSERT INTO Students (name, email, roll_no, hostel_id)
+INSERT INTO Students (name, email, roll_no, hostel_id, closing_date)
 VALUES
     -- 2019 batch
-    ('Aakash Kumar', 'ak@gmail.com', 1901015, 100),
-    ('Alok Singh', 'as@gmail.com', 1901103, 100),
-    ('Pranjal Kumari', 'pk@gmail.com', 1901077, 101),
-    ('Rasmi Singh', 'rs@gamil.com', 1901009, 101),
+    ('Aakash Kumar', 'ak@gmail.com', 1901015, 100, null),
+    ('Alok Singh', 'as@gmail.com', 1901103, 100, null),
+    ('Pranjal Kumari', 'pk@gmail.com', 1901077, 101, null),
+    ('Rasmi Singh', 'rs@gamil.com', 1901009, 101, null),
     -- 2020 batch
-    ('Aashish Kumar', 'aashishk@gmail.com', 2001003, 100),
-    ('Anmol Singh', 'anmols@gmail.com', 2001165, 100),
-    ('Priya Kumari', 'priyak@gmail.com', 2001098, 101),
-    ('Remi Singh', 'remis@gamil.com', 2001201, 101);
+    ('Aashish Kumar', 'aashishk@gmail.com', 2001003, 100, null),
+    ('Anmol Singh', 'anmols@gmail.com', 2001165, 100, null),
+    ('Priya Kumari', 'priyak@gmail.com', 2001098, 101, null),
+    ('Remi Singh', 'remis@gamil.com', 2001201, 101, null);
 
 -- for leaves
 INSERT INTO Leaves (roll_no, start_date, end_date, remark)
