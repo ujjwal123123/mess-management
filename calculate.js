@@ -72,7 +72,7 @@ async function calculateAmount(start_date, end_date, roll_no) {
   let daysPresent = 0; // number of days the student was present in the hostel
 
   let itr_date = start_date;
-  while (itr_date < end_date) {
+  while (itr_date <= end_date) {
     if (await isPresentOnDate(itr_date, roll_no)) {
       amount += await rateOnDate(itr_date);
       daysPresent++;
@@ -99,7 +99,11 @@ async function getAmountList(roll_no) {
     .where("program", program);
 
   let startDate = new Date(semesters[0].start_date);
-  let currentDate = new Date();
+  let currentDate = new Date();//TODO
+  let closingDate = new Date("2021-01-01");
+  if(currentDate-closingDate>0)
+    currentDate = closingDate;
+
   while (currentDate >= startDate) {
     const Start =
       currentDate.getFullYear().toString() +
@@ -116,6 +120,7 @@ async function getAmountList(roll_no) {
         .toString();
 
     const row = await calculateAmount(new Date(Start), new Date(End), roll_no);
+    // var month_name = 
     amountList.push({
       month: Start,
       daysPresent: row[1],
@@ -124,8 +129,13 @@ async function getAmountList(roll_no) {
 
     currentDate.setMonth(currentDate.getMonth() - 1);
   }
-
+  // console.log(closing_date);
   return amountList;
 }
+
+getAmountList(1703100).then((data) => {
+  console.log(data);
+  console.log("successfully");
+});
 
 module.exports = { getAmountList };
