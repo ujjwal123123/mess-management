@@ -7,7 +7,10 @@ block content
         h1.title.is-1.is-inline= student.name
         .subtitle.is-3.is-inline= ' ' + student.roll_no
     .level-right
-      // TODO: display if the student is in the hostel here
+      if is_present
+        h2.title.is-4.has-text-success In Hostel
+      else
+        h2.title.is-4.has-text-danger Not In Hostel
 
   p
     b Email:
