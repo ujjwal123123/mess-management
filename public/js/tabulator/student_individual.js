@@ -1,10 +1,9 @@
 const table = new Tabulator("#students_individual-table", {
   autoColumns: false, // create columns from data field names
   pagination: "local",
-  paginationSize: 30,
+  paginationSize: 15,
   layout: "fitDataTable",
   columns: [
-    // TODO: `From` and `To` should just be replaced by a `Month` column
     { title: "Month", field: "month", headerFilter: true },
     { title: "No. of days", field: "daysPresent", headerFilter: true },
     { title: "Amount", field: "amount", headerFilter: true },

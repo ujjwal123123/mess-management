@@ -48,25 +48,25 @@ block content
       .modal-background
       .modal-content
         .box
-          form(action="/leaves", method="post")
+          form(action="/leaves",enctype="multipart/form-data", method="post")
             .field
-              input.input(type="hidden", name="roll_no", value=student.roll_no)
+              input.input(type="hidden", name="roll_no", autocomplete="off", value=student.roll_no)
             .field
               label.label Start date
               .control
-                input.input(type="date", name="start_date", required)
+                input.input(type="date", name="start_date", autocomplete="off", required)
             .field
               label.label End date
               .control
-                input.input(type="date", name="end_date", required)
+                input.input(type="date", name="end_date", autocomplete="off", required)
             .field
               lable.label Remark
               .control
-                textarea.textarea(type="text", name="remark", maxlength="240")
+                textarea.textarea(type="text", name="remark", autocomplete="off", maxlength="500", placeholder="Write upto 500 characters")
             .field
-              label.label Add attachement
+              label.label Add attachement(.txt)
               .control
-                input(type="file", name="attachment")
+                input(type="file", name="attachment", autocomplete="off", accept=".txt")
 
             .field
               .control
