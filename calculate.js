@@ -155,10 +155,5 @@ async function getAmountList(roll_no) {
   return amountList;
 }
 
-getAmountList(2001098).then((data) => {
-  //here put roll_no to check
-  console.log(data);
-  console.log("successfully");
-});
 
-module.exports = { getAmountList };
+module.exports = { getAmountList,isPresentOnDate };
