@@ -4,7 +4,7 @@ block content
   h1.title.is-1 Add Leaves
   .level
     .level-left
-      form(action="/leaves", method="post")
+      form(action="/leaves", enctype="multipart/form-data", method="post")
         .field
           label.label Roll No
           .control
@@ -13,29 +13,31 @@ block content
               name="roll_no",
               pattern="[0-9]{2}0[1-9]{1}[0-9]{3}",
               placeholder="Enter Roll no",
+              autocomplete="off",
               required
             )
         .field
           label.label Start Date
           .control
-            input.input(type="date", name="start_date", required)
+            input.input(type="date", name="start_date", autocomplete="off", required)
         .field
           label.label End date
           .control
-            input.input(type="date", name="end_date", required)
+            input.input(type="date", name="end_date", autocomplete="off", required)
         .field
           label.label Remark
           .control
             textarea.textarea(
               type="text",
               name="remark",
-              maxlength="240",
-              placeholder="Write upto 240 characters"
+              maxlength="500",
+              autocomplete="off",
+              placeholder="Write upto 500 characters"
             )
         .field
-          label.label Add attachement
+          label.label Add attachement (.txt)
           .control
-            input(type="file", name="attachment")
+            input(type="file", name="attachment", accept=".txt", autocomplete="off",)
         .field
           .control
             .buttons
