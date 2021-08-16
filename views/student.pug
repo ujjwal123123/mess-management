@@ -5,9 +5,69 @@ block content
     .level-left
       h1.title.is-1 Students
     .level-right
-      button#download_button.button Download
+      button#student_download_button.button Download
+      button.modal-button.button(
+        data-target="student_list",
+        aria-haspopup="true",
+        style="margin-left: 15px"
+      ) Students List
 
   #students-table
 
+  #student_list.modal
+    .modal-background
+    .modal-content
+      .box
+        form(action="/amount_list", method="get")
+          .field
+            label.label Program
+            .select
+              select(name="program", required)
+                option(disabled, selected, hidden) Select Program
+                option(value="btech") B. Tech.
+                option(value="mtech") M. Tech.
+                option(value="phd") Ph.D.
+          .field
+            label.label Batch's Year
+              .control
+                //- TODO: set default value to the current year
+                input.input(
+                  type="number",
+                  name="batch_year",
+                  required,
+                  value="2021"
+                )
+          .field
+            label.label Month
+            .select
+              select(name="month", required)
+                option(disabled, selected, hidden) Select Month
+                option(value="january") Jan
+                option(value="february") Feb
+                option(value="march") Mar
+                option(value="april") Apr
+                option(value="may") May
+                option(value="june") Jun
+                option(value="july") Jul
+                option(value="august") Aug
+                option(value="september") Sep
+                option(value="october") Oct
+                optoin(value="november") Nov
+                option(value="december") Dec
+          .field
+            label.label Year
+              .control
+                //- TODO: set default value to the current year
+                input.input(type="number", name="year", required, value="2021")
+
+          .field
+            .control
+              .buttons
+                button.is-info.button(type="submit") Submit
+                button.button Cancel
+
+  button.modal-close.is-large(aria-label="close")
+
   script(type="text/javascript", src="/js/delete.js")
   script(type="text/javascript", src="/js/tabulator/student.js")
+  script(type="text/javascript", src="/js/modal-toggle.js")

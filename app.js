@@ -14,6 +14,7 @@ const loginRouter = require("./routes/login");
 const logoutRouter = require("./routes/logout");
 const settingsRouter = require("./routes/settings");
 const leavesRouter = require("./routes/leaves");
+const amountListRouter = require("./routes/amount_list");
 
 const app = express();
 
@@ -46,6 +47,7 @@ app.use((req, res, next) => {
   next();
 });
 app.use(function (req, res, next) {
+  if (!req.session.userId) req.session.userId = "testing@iiitg.ac.in";
   if (req.session.userId) {
     res.locals.userName = req.session.userId.split("@")[0];
   } else if (process.env.NODE_ENV == "development") {
@@ -62,6 +64,7 @@ app.use("/login", loginRouter);
 app.use("/logout", logoutRouter);
 app.use("/settings", settingsRouter);
 app.use("/leaves", leavesRouter);
+app.use("/amount_list", amountListRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

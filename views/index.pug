@@ -19,11 +19,21 @@ block content
         .field
           label.label Start Date
           .control
-            input.input(type="date", name="start_date", autocomplete="off", required)
+            input.input(
+              type="date",
+              name="start_date",
+              autocomplete="off",
+              required
+            )
         .field
           label.label End date
           .control
-            input.input(type="date", name="end_date", autocomplete="off", required)
+            input.input(
+              type="date",
+              name="end_date",
+              autocomplete="off",
+              required
+            )
         .field
           label.label Remark
           .control
@@ -37,7 +47,12 @@ block content
         .field
           label.label Add attachement (.txt)
           .control
-            input(type="file", name="attachment", accept=".txt", autocomplete="off",)
+            input(
+              type="file",
+              name="attachment",
+              accept=".txt",
+              autocomplete="off"
+            )
         .field
           .control
             .buttons
