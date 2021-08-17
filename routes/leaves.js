@@ -1,8 +1,24 @@
 const express = require("express");
 const router = express.Router();
 const database = require("../database");
+const multer = require("multer");
 const utils = require("../utils");
 
+//for multer middleware
+const storage = multer.memoryStorage();
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype == 'text/plain') {
+      cb(null, true);
+  } else {
+      cb(null, false);
+  }
+}
+
+const upload = multer({
+  fileFilter,
+  storage
+});
+//for multer middleware
 /**
  *
  * @param {Date} start_date leave start date
@@ -10,37 +26,9 @@ const utils = require("../utils");
  * @param {number} roll_no
  * @returns {Promise<boolean>}
  */
-async function leaveInSemester(start_date, end_date, roll_no) {
-  // TODO: this code does not work and needs testing
-  if (
-    await database("Semesters")
-      .select()
-      .where("program", utils.getProgram(roll_no))
-      .where("year_of_admission", utils.getYearOfAdmission(roll_no))
-      .where(function () {
-        this.where(function () {
-          this.where("start_date", ">", start_date).where(
-            "start_date",
-            "<",
-            end_date
-          );
-        }).orWhere(function () {
-          this.where("end_date", ">", start_date).where(
-            "end_date",
-            ">",
-            end_date
-          );
-        });
-      })
-      .then((rows) => rows.length > 0)
-  ) {
-    return false;
-  }
 
-  return true;
-}
 
-router.post("/", async function (req, res, next) {
+router.post("/", upload.single("attachment"), async function (req, res, next) {
   try {
     const roll_no = parseInt(req.body.roll_no);
     const start_date = new Date(req.body.start_date);
@@ -60,15 +48,19 @@ router.post("/", async function (req, res, next) {
       throw Error("Invalid date entered");
     }
 
-    // if (await leaveInSemester(start_date, end_date, roll_no)) {
-    //   throw Error("Invalid date entered");
-    // }
+    //FOR .txt files
+    const file = req.file;
+    let remark = req.body.remark;
+    if(file){
+      const multerText = Buffer.from(file.buffer).toString("utf-8");
+      remark += "\n"+ 'Attachment : '+multerText;
+    }
 
     await database("Leaves").insert({
       roll_no: roll_no,
       start_date: start_date,
       end_date: end_date,
-      remark: req.body.remark,
+      remark: remark,
     });
     res.redirect("/student/" + roll_no);
   } catch (err) {

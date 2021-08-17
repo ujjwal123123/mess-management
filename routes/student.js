@@ -49,10 +49,13 @@ router.get("/:roll_no", async function (req, res, next) {
     const studentLeaves = await database("Leaves")
       .select()
       .where("roll_no", roll_no);
+      // const isPresent = false;
+    const isPresent = await calculate.isPresentOnDate(new Date(),roll_no);
 
     res.render("student_individual", {
       student: studentInfo[0],
       leaves: studentLeaves,
+      is_present: isPresent,
     });
   } catch (err) {
     next(err);

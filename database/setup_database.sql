@@ -25,7 +25,7 @@ create table Leaves
     roll_no    int(7) not null references Students (roll_no) on delete cascade,
     start_date date,
     end_date   date,
-    remark     varchar(240),
+    remark     varchar(500),
     unique (roll_no, start_date),
     CHECK (end_date >= start_date)
 );

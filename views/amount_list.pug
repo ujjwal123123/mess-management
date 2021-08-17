@@ -5,20 +5,20 @@ block content
     .level-left
       h1.title.is-1 Students
     .level-right
-      button#student_download_button.button Download
+      button#amount_list_download_button Download(TODO)
       button.modal-button.button(
         data-target="student_list",
         aria-haspopup="true",
         style="margin-left: 15px"
       ) Students List
 
-  #students-table
+  #students-amount-list
 
   #student_list.modal
     .modal-background
     .modal-content
       .box
-        form(action="/amount_list", method="get")
+        form(action="/student/get_list", method="get")
           .field
             label.label Program
             .select
@@ -69,5 +69,5 @@ block content
   button.modal-close.is-large(aria-label="close")
 
   script(type="text/javascript", src="/js/delete.js")
-  script(type="text/javascript", src="/js/tabulator/student.js")
+  script(type="text/javascript", src="/js/tabulator/student_list_table.js")
   script(type="text/javascript", src="/js/modal-toggle.js")
