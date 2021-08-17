@@ -156,4 +156,4 @@ async function getAmountList(roll_no) {
 }
 
 
-module.exports = { getAmountList,isPresentOnDate };
+module.exports = { getAmountList,isPresentOnDate,calculateAmount };

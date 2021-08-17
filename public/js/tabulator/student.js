@@ -38,7 +38,7 @@ const table = new Tabulator("#students-table", {
 table.setData(window.location.href + "/json");
 
 // download button
-const downloadButton = document.getElementById("download_button");
+const downloadButton = document.getElementById("student_download_button");
 downloadButton.addEventListener("click", () => {
   table.download("csv", "data.csv");
 });
