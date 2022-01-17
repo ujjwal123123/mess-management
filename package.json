@@ -23,7 +23,7 @@
   },
   "devDependencies": {
     "@prettier/plugin-pug": "^1.18.0",
-    "eslint": "^8.4.0",
+    "eslint": "^8.7.0",
     "eslint-config-prettier": "^8.3.0",
     "nodemon": "^2.0.15",
     "prettier": "^2.5.1"
